@@ -250,6 +250,9 @@ export interface EquationConfig {
   alignment: string;       // "left" | "center" | "right"
   font_name: string;
   font_size_pt: number;
+  raw_math?: string;
+  mathml?: string;
+  latex?: string;
 }
 
 // ── APA RULES ─────────────────────────────────────────────────────────────────

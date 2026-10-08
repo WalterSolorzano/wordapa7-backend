@@ -1012,7 +1012,8 @@ def generate_apa7_docx(
                     parent.remove(el)
 
     paragraphs_before_body = 0
-    if not use_orig_cover and portada:
+    is_skip_cover = force_skip_cover or (cover_mode in ('none', 'sin_portada'))
+    if not use_orig_cover and portada and not is_skip_cover:
         is_uni_profile = (cover_mode == 'generate_uni_cover')
 
         if is_uni_profile:

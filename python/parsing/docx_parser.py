@@ -213,7 +213,9 @@ def _extract_paragraph_text_with_footnotes(p_element) -> tuple[str, list[int]]:
         # (ej: "Br. NombreCarnet: 2022-0215IBr. NombreCarnet: ...").
         if local == 'Fallback':
             return
-        if local == 't' and el.text:
+        if local in ('t', 'm:t') and el.text:
+            out.append(el.text)
+        elif local == 't' and el.text:
             out.append(el.text)
         elif local == 'p':
             # Separar párrafos anidados (ej. dentro de un w:txbxContent)
@@ -1489,7 +1491,7 @@ def parse_docx_bytes(
                     footnote_ids=footnote_ids,
                     hyperlinks=hyperlinks,
                     bookmarks=bookmarks,
-                    equation=EquationConfig() if p_has_math else None,
+                    equation=EquationConfig(raw_math=text) if p_has_math else None,
                 )
                 elements.append(elem)
 

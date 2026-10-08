@@ -104,6 +104,13 @@ export interface ContextoFigura {
   designStyle?: DesignStyle;
   /** Subfiguras si la figura es compuesta / multipanel */
   subfigures?: { id: string; label: string; title: string; relative_url?: string }[];
+  /** Datos de la ecuación cuando tipo es 'equation' */
+  ecuacion?: {
+    raw_math?: string;
+    number?: string;
+    alignment?: string;
+    font_name?: string;
+  } | null;
 }
 
 export interface MedidaFigura {
@@ -266,6 +273,14 @@ export function contextosDeFiguras(elementos: readonly ElementModel[]): Contexto
           },
       designStyle: esImagen ? el.image_info?.design_style : undefined,
       subfigures: esImagen ? (el.image_info?.subfigures as any) : undefined,
+      ecuacion: esEcuacion
+        ? {
+            raw_math: el.equation?.raw_math || el.text,
+            number: el.equation?.number,
+            alignment: el.equation?.alignment,
+            font_name: el.equation?.font_name,
+          }
+        : null,
     });
   }
 

@@ -330,14 +330,14 @@ const ChangeMark: React.FC<{
   );
 };
 
-export const computePages = (elements: ElementModel[], maxUnits = 14, firstPageOnly = false): ElementModel[][] => {
+export const computePages = (elements: ElementModel[], maxUnits = 14, firstPageOnly = false, skipCover = false): ElementModel[][] => {
   const pages: ElementModel[][] = [];
   const coverElements: ElementModel[] = [];
   const bodyElements: ElementModel[] = [];
 
   elements.forEach((elem) => {
     if (elem.type === 'empty') return;
-    if (elem.is_cover_section || elem.type === 'portada_block') {
+    if (!skipCover && (elem.is_cover_section || elem.type === 'portada_block')) {
       if (elem.type !== 'page_break') {
         coverElements.push(elem);
       }
@@ -448,6 +448,8 @@ export interface RenderedPagesInput {
   heights?: Map<string, number> | null;
   /** `onlyCover`: devolver solo la página 1 (miniaturas de portada). */
   firstPageOnly?: boolean;
+  /** Omitir la separación forzada de portada a página 1 */
+  skipCover?: boolean;
 }
 
 /**
@@ -472,6 +474,7 @@ export const computeRenderedPages = ({
   apaFormat,
   heights,
   firstPageOnly,
+  skipCover,
 }: RenderedPagesInput): { geom: PageGeometry; pages: ElementModel[][] } => {
   // ── Geometría REAL del documento (Word como verdad): hoja en pt de Word a
   //    96 DPI + márgenes de rules. El zoom es CSS aparte, no aquí.
@@ -494,7 +497,7 @@ export const computeRenderedPages = ({
   // Reparto con alturas DOM reales: parte párrafos que exceden la hoja (sin recorte).
   return {
     geom,
-    pages: applyPageFlow(computePages(elements, maxUnits, firstPageOnly), heights ?? new Map(), geom),
+    pages: applyPageFlow(computePages(elements, maxUnits, firstPageOnly, skipCover), heights ?? new Map(), geom),
   };
 };
 
@@ -933,12 +936,14 @@ export const PaperCanvas: React.FC<{ onElementClick?: (elementId: string, rect: 
   // reflow por alturas medidas, sin una segunda cuenta en ningún lado.
   // ── Verdad Word: fragmenta por cortes reales ANTES de agrupar páginas ──
   const flowElems = expandByLineCuts(doc.elements, layoutCuts);
+  const skipCover = Boolean(portada?.force_skip_cover || portada?.cover_mode === 'none' || portada?.cover_mode === 'sin_portada');
   const { geom, pages } = computeRenderedPages({
     elements: flowElems,
     rules,
     apaFormat: doc.apa_format,
     heights: measuredRef.current,
     firstPageOnly: !!onlyCover,
+    skipCover,
   });
   const PAGE_W = Math.round(geom.pageW);   // Letter 816px · A4 793px
   const PAGE_H = Math.round(geom.pageH);   // Letter 1056px · A4 1123px

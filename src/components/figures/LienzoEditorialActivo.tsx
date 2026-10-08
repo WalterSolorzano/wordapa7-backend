@@ -29,6 +29,13 @@ export interface LienzoEditorialActivoProps {
     row_spans?: CellSpan[][];
     style?: TableStylePreset;
   } | null;
+  /** Datos de la ecuación cuando `tipo` es `'equation'`. */
+  ecuacion?: {
+    raw_math?: string;
+    number?: string;
+    alignment?: string;
+    font_name?: string;
+  } | null;
   /** Tamaño DECLARADO en el `.docx`, para pintar la imagen a escala real. */
   anchoCm?: number | null;
   altoCm?: number | null;
@@ -87,6 +94,7 @@ export const LienzoEditorialActivo: React.FC<LienzoEditorialActivoProps> = ({
   imageUrl,
   tipo = 'image',
   tabla,
+  ecuacion,
   anchoCm,
   altoCm,
   prevParagraph,
@@ -222,7 +230,34 @@ export const LienzoEditorialActivo: React.FC<LienzoEditorialActivoProps> = ({
           {figureTitle}
         </div>
 
-        {esTabla && tablaCompleta ? (
+        {tipo === 'equation' ? (
+          <div
+            data-testid="ecuacion-preview"
+            style={{
+              padding: 'var(--space-6) var(--space-8)',
+              margin: 'var(--space-3) 0 var(--space-4)',
+              backgroundColor: 'var(--color-bg-canvas)',
+              border: '1px solid var(--color-border-subtle)',
+              borderRadius: 'var(--radius-md)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              fontFamily: ecuacion?.font_name || 'Cambria Math, "Times New Roman", serif',
+              fontSize: '18px',
+              color: 'var(--paper-ink)',
+              overflowX: 'auto',
+            }}
+          >
+            <div style={{ flex: 1, textAlign: 'center', fontStyle: 'italic', letterSpacing: '0.05em' }}>
+              {ecuacion?.raw_math?.trim() || figureTitle || 'f(x) = y'}
+            </div>
+            {ecuacion?.number && (
+              <span style={{ fontSize: '14px', fontStyle: 'normal', color: 'var(--color-text-secondary)', marginLeft: '16px' }}>
+                ({ecuacion.number})
+              </span>
+            )}
+          </div>
+        ) : esTabla && tablaCompleta ? (
           <TablaRender
             tabla={tablaCompleta}
             editable

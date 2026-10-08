@@ -289,11 +289,12 @@ export const CoverEditorPanel: React.FC = () => {
   }, [integrantes, busquedaRoster]);
 
   // Determinar modo actual
-  const currentMode: 'original' | 'apa7' | 'uni' = useMemo(() => {
+  const currentMode: 'original' | 'none' | 'apa7' | 'uni' = useMemo(() => {
+    if (portada.force_skip_cover || portada.cover_mode === 'none' || portada.cover_mode === 'sin_portada') return 'none';
     if (portada.use_original_cover !== false) return 'original';
     if (portada.cover_mode === 'generate_uni_cover') return 'uni';
     return 'apa7';
-  }, [portada.use_original_cover, portada.cover_mode]);
+  }, [portada.use_original_cover, portada.cover_mode, portada.force_skip_cover]);
 
   const setCoverMode = (mode: 'original' | 'apa7' | 'uni') => {
     if (mode === 'original') {
@@ -445,6 +446,20 @@ export const CoverEditorPanel: React.FC = () => {
         flex: 1, overflowY: 'auto', padding: '14px',
         display: 'flex', flexDirection: 'column', gap: '16px',
       }}>
+        {currentMode === 'none' && (
+          <div style={{
+            padding: '12px', borderRadius: 'var(--radius-md)',
+            backgroundColor: 'var(--color-bg-canvas)', border: '1px solid var(--color-border-subtle)',
+            display: 'flex', flexDirection: 'column', gap: '6px',
+          }}>
+            <span style={{ fontSize: '12px', fontWeight: 700, color: 'var(--color-text-primary)' }}>
+              Documento sin portada
+            </span>
+            <span style={{ fontSize: '11px', color: 'var(--color-text-secondary)', lineHeight: 1.4 }}>
+              Has seleccionado no incluir portada en este documento. El contenido arrancará directamente desde el inicio del texto.
+            </span>
+          </div>
+        )}
         {/* Formulario SIEMPRE activo y editable */}
         <div style={{
           display: 'flex', flexDirection: 'column', gap: '16px',

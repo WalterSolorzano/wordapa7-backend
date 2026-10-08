@@ -260,7 +260,7 @@ export const GaleriaActivosColumna: React.FC<Props> = ({
                   </span>
                 </div>
 
-                {/* Leyenda o placeholder */}
+                {/* Leyenda o fórmula */}
                 <span
                   style={{
                     fontSize: '11px',
@@ -269,9 +269,12 @@ export const GaleriaActivosColumna: React.FC<Props> = ({
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
                     lineHeight: '1.3',
+                    fontStyle: ctx.tipo === 'equation' ? 'italic' : 'normal',
                   }}
                 >
-                  {ctx.leyenda && ctx.leyenda.trim() ? ctx.leyenda : 'Sin leyenda definida'}
+                  {ctx.tipo === 'equation'
+                    ? (ctx.ecuacion?.raw_math || ctx.leyenda || 'Ecuación matemática')
+                    : (ctx.leyenda && ctx.leyenda.trim() ? ctx.leyenda : 'Sin leyenda definida')}
                 </span>
 
                 {/* Sección o capítulo contenedor */}

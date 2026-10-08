@@ -99,11 +99,13 @@ def audit_document_heuristic(doc_model: Any) -> DocAuditResult:
                 f"Salto de nivel de heading: H{prev_level} → H{lvl} "
                 f"(falta H{prev_level + 1} antes de '{text[:60]}')"
             )
-        # Heading numerado: "1.", "2.", "2.1." al inicio
-        if re.match(r'^\d+(\.\d+)*\.?\s', text):
+        # Heading numerado: solo alertar si la configuración de numeración está en "none"
+        rules_obj = getattr(doc_model, 'rules', None) or getattr(doc_model, 'apa_rules', None)
+        num_style = getattr(rules_obj, 'heading_numbering_style_lvl1', 'none') if rules_obj else 'none'
+        if num_style == 'none' and re.match(r'^\d+(\.\d+)*\.?\s', text):
             heading_issues.append(
-                f"Heading numerado no permitido en APA 7: '{text[:60]}' "
-                "(los títulos APA no llevan numeración)"
+                f"Heading numerado no permitido en APA 7 estándar: '{text[:60]}' "
+                "(los títulos APA no llevan numeración salvo que se configure numeración de capítulos)"
             )
         prev_level = lvl
 

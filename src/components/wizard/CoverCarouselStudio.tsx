@@ -46,7 +46,7 @@ import type { Hoja } from '../../lib/portada/geometria';
 
 /** Los modos de portada que la app sabe construir. `original` gana sobre los
  *  demás porque conservar la portada del documento no es un estilo más. */
-type CoverMode = 'original' | 'apa7' | 'uni' | 'pro' | 'custom';
+type CoverMode = 'original' | 'none' | 'apa7' | 'uni' | 'pro' | 'custom';
 
 /** La hoja A4 es la más alargada que el carrusel dibuja (297/210 ≈ 1.414); se
  *  usa 1.42 como cota superior para que ninguna portada desborde su tarjeta. */
@@ -104,6 +104,7 @@ export const CoverCarouselStudio: React.FC = () => {
      lo que esta pantalla sabe afirmar. Lo que cae fuera se DICE en vez de
      encender "APA 7" para un documento que no es APA 7. */
   const currentMode: CoverMode | null = useMemo(() => {
+    if (portada.force_skip_cover || portada.cover_mode === 'none' || portada.cover_mode === 'sin_portada') return 'none';
     if (portada.use_original_cover !== false) return 'original';
     if (portada.cover_mode === 'generate_uni_cover') return 'uni';
     if (portada.cover_mode === 'apa_pro') return 'pro';
@@ -112,7 +113,7 @@ export const CoverCarouselStudio: React.FC = () => {
        `generate_apa7_template`. Los dos son el mismo estado. */
     if (!portada.cover_mode || portada.cover_mode === 'generate_apa7_template') return 'apa7';
     return null;
-  }, [portada.use_original_cover, portada.cover_mode, portada.cover_template_id]);
+  }, [portada.use_original_cover, portada.cover_mode, portada.cover_template_id, portada.force_skip_cover]);
 
   const coverModeDesconocido = currentMode === null ? (portada.cover_mode ?? null) : null;
   const plantilla = portada.cover_template_id || null;
@@ -122,7 +123,14 @@ export const CoverCarouselStudio: React.FC = () => {
   const hojaDeLaSesion: Hoja = rules.page_size === 'a4' ? 'a4' : 'carta';
 
   const selectMode = (mode: CoverMode, templateId?: string) => {
-    if (mode === 'original') {
+    if (mode === 'none') {
+      setPortada({
+        use_original_cover: false,
+        force_skip_cover: true,
+        cover_mode: 'none',
+        cover_template_id: '',
+      });
+    } else if (mode === 'original') {
       setPortada({
         use_original_cover: true,
         force_skip_cover: false,
@@ -289,7 +297,13 @@ export const CoverCarouselStudio: React.FC = () => {
                   onUpload={abrirSelector}
                   onConfirmSelect={(id) => {
                     selectMode(id as CoverMode);
-                    setVista('editor');
+                    if (id === 'none') {
+                      setCoverSetupDone(true);
+                      setWizardStep(2);
+                      showToast('Documento configurado sin portada', 'success');
+                    } else {
+                      setVista('editor');
+                    }
                   }}
                 />
               </div>

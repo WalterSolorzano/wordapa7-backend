@@ -541,6 +541,9 @@ class EquationConfig(BaseModel):
     alignment: str = "center"         # "left" | "center" | "right"
     font_name: str = "Times New Roman"  # fuente de apoyo (número y etiqueta)
     font_size_pt: float = 12.0
+    raw_math: Optional[str] = None
+    mathml: Optional[str] = None
+    latex: Optional[str] = None
 
 
 class LogoPortada(BaseModel):

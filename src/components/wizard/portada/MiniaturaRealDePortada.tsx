@@ -21,7 +21,7 @@
  * que el receso se hace con escala, nunca apagando la hoja.
  */
 import React, { useMemo } from 'react';
-import { CloudUpload } from 'lucide-react';
+import { CloudUpload, FileText } from 'lucide-react';
 import { useDocStore } from '../../../store/useDocStore';
 import { medidaDeLaHoja, type Hoja } from '../../../lib/portada/geometria';
 import { getPageGeometry } from '../../../lib/pageGeometry';
@@ -98,6 +98,18 @@ export const MiniaturaRealDePortada: React.FC<Props> = ({ diseno, anchoPx, hoja 
       >
         <CloudUpload size={Math.max(18, anchoPx * 0.16)} strokeWidth="var(--icon-stroke)" aria-hidden />
         <span style={{ fontSize: 'var(--text-sm)', fontWeight: 800 }}>.docx</span>
+      </div>
+    );
+  }
+
+  if (diseno === 'none') {
+    return (
+      <div
+        data-papel="true"
+        style={{ ...papel, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, color: 'var(--text-muted)' }}
+      >
+        <FileText size={Math.max(18, anchoPx * 0.16)} strokeWidth="var(--icon-stroke)" aria-hidden />
+        <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--text-secondary)' }}>Sin portada</span>
       </div>
     );
   }

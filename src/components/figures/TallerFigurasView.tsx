@@ -457,6 +457,7 @@ export const TallerFigurasView: React.FC = () => {
             })()}
             tipo={contextoActual.tipo}
             tabla={contextoActual.tabla}
+            ecuacion={contextoActual.ecuacion}
             anchoCm={contextoActual.anchoCm}
             altoCm={contextoActual.altoCm}
             prevParagraph={contextoActual.parrafoAnterior ?? undefined}

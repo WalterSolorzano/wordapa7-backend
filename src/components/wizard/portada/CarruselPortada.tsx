@@ -65,6 +65,12 @@ function obtenerMascotaDePortada(disenoId: string): {
         expression: 'happy',
         mensaje: 'Portada profesional con titulación corrida y numeración',
       };
+    case 'none':
+      return {
+        kind: 'ruler',
+        expression: 'happy',
+        mensaje: 'Sin portada: el documento inicia directamente en la primera página',
+      };
     case 'custom':
       return {
         kind: 'highlighter',
@@ -88,12 +94,13 @@ export type DisenoDePortada = {
   esAccion?: boolean;
 };
 
-/** Los cinco modos, con el diseño que los dibuja de verdad.
+/** Los seis modos, con el diseño que los dibuja de verdad.
  *
  *  Si un modo no tiene componente, no puede entrar en la lista: no puede pasar
  *  lo de `original`, que se caía a un placeholder sin miniatura propia. */
 export const DISENOS_DE_PORTADA: DisenoDePortada[] = [
   { id: 'original', titulo: 'Conservar original', subtitulo: 'Mantiene logos y diseño · recomendado' },
+  { id: 'none', titulo: 'Sin portada', subtitulo: 'Inicia directo en la primera página sin carátula' },
   { id: 'apa7', titulo: 'APA 7 Estándar', subtitulo: 'Formato oficial 7ª edición' },
   { id: 'uni', titulo: 'Institucional UNI', subtitulo: 'Plantilla oficial universitaria' },
   { id: 'pro', titulo: 'Profesional APA', subtitulo: 'Con running head y página' },
