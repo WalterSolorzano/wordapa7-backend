@@ -1,0 +1,2848 @@
+/* ============================================================
+   WordAPA7 · Design System
+   Fuente única de verdad visual (Fase 1 del mega-prompt)
+   Tema: CLARO por defecto + toggle OSCURO (data-theme="dark").
+   ============================================================ */
+
+:root,
+:root[data-theme="light"] {
+  /* ════════════ 1 · COLOR (LIGHT — base por defecto) ════════════ */
+  --color-bg-canvas: #f5f6f8;
+  --color-bg-surface: #ffffff;
+  --color-bg-surface-alt: #eef0f4;
+  --color-bg-surface-hover: #e8eaf0;
+  --color-border-subtle: rgba(0, 0, 0, 0.09);
+  --color-border-strong: rgba(0, 0, 0, 0.15);
+  --color-border-focus: #4f7cff;
+  --color-text-primary: #1a1a2e;
+  --color-text-secondary: #4a4a5e;
+  --color-text-tertiary: #6b6b80;
+  --color-text-on-accent: #ffffff;
+  --color-accent: #4f7cff;
+  --color-accent-hover: #3b66e0;
+  --color-accent-pressed: #2b52cc;
+  --color-accent-soft: rgba(79, 124, 255, 0.10);
+  /* La tinta PROFUNDA del acento y las piezas de la marca de cita del
+     manuscrito. El azul vivo `#4f7cff` sobre papel blanco se leía como un
+     resaltador fluorescente; estas son las tres piezas juntas —tinta, fondo de
+     la marca y subrayado— para que no divergan. */
+  --color-accent-deep: #2f4a94;
+  --mark-citation-bg: #dde4f2;
+  --mark-citation-ink: #22386e;
+  --color-accent-secondary: var(--color-success);
+  /* Verde APAGADO (sage) y no el esmeralda saturado anterior (#38a017): el
+     estado de verificación no es una alerta, y un verde vivo competía con el
+     acento azul por la mirada. Contraste sobre blanco ≥ 4.5:1. */
+  --color-success: #2f855a;
+  --color-warning: #c0562e;
+  --color-danger: #d4382e;
+  --color-info: #4f7cff;
+  --color-navy-header: #1e293b;
+  --color-navy-header-text: #ffffff;
+  /* Secundarios del rediseño de Estructura: combinan con el azul de acento.
+     El teal es el nivel H2 y el indigo el H3 del diagrama; el navy es la tinta
+     de los títulos editoriales (papel APA). */
+  --color-secondary: #0d9488;
+  --color-secondary-soft: rgba(13, 148, 136, 0.12);
+  --color-ink: #1e3a5f;
+  --color-level-3: #6366f1;
+  /* Tintes de severidad (vista de revisión) — definidos UNA sola vez y
+     estables en ambos temas para conservar el valor computado exacto. */
+  --severity-critical-soft: rgba(220, 38, 38, 0.12);
+  --severity-warning-soft: rgba(192, 86, 46, 0.12);
+  --severity-info-soft: rgba(59, 130, 246, 0.12);
+  /* Fondo del resaltado del detector probabilístico de IA. Definido UNA sola
+     vez por tema: en claro sobre superficie blanca, en oscuro con más alfa
+     porque la superficie oscura se come el gris suave. */
+  --mark-ai-bg: rgba(107, 114, 128, 0.12);
+  /* RAMPA DE INTENSIDAD del detector de IA — cuatro escalones, un solo canal.
+     El color de un mosaico carga UNA variable y ninguna más: cuánta proporción
+     del bloque parece IA. El motor, la severidad y el tipo de problema van
+     como texto, porque si el color también los codificara, tres variables
+     competirían por el mismo canal y la vista dejaría de leerse.
+
+     Cuatro escalones y no un degradado: doce matices no se ordenan de un
+     vistazo, cuatro sí.
+
+     LA TINTA ES LA DEL MOTOR IA, Y ANTES NO LO ERA. Los cuatro escalones eran
+     cuatro tonos de `--color-danger`, y cuatro tonos de rojo no leen como
+     intensidad: leen como error. El detector de IA es PROBABILÍSTICO —propone,
+     la persona decide—, y un mapa con la mitad del documento en rojo está
+     gritando sobre algo que no ha pasado. La rampa toma entonces la tinta que
+     ya identifica a este motor en el resto de la app y sus pasos de alfa, que
+     es la convención de las demás familias: una tinta, cuatro pasos, de tenue a
+     marcada. El tope sigue siendo sólido para que el escalón 4 se señale de un
+     vistazo.
+
+     El primer escalón es casi neutro a propósito. Un bloque donde el detector
+     no vio nada no es una advertencia, y si su cuadrado se viera levemente
+     marcado el mapa estaría mintiendo sobre la mitad del documento. */
+  --ia-nivel-1: var(--color-engine-ia-a08);
+  --ia-nivel-2: var(--color-engine-ia-a20);
+  --ia-nivel-3: var(--color-engine-ia-a40);
+  --ia-nivel-4: var(--color-engine-ia);
+  /* La rampa de manchas de la vista previa (tarjeta 3 de Revisión & IA):
+     la misma tinta del motor IA en cuatro pasos de alfa. El papel es blanco
+     en ambos temas, así que un solo set alcanza; no se declara en oscuro. */
+  --ia-mancha-1: rgba(124, 58, 237, 0.08);
+  --ia-mancha-2: rgba(124, 58, 237, 0.15);
+  --ia-mancha-3: rgba(124, 58, 237, 0.24);
+  --ia-mancha-4: rgba(124, 58, 237, 0.34);
+  --severity-critical-tint: rgba(220, 38, 38, 0.05);
+  --severity-success-tint: rgba(22, 163, 74, 0.05);
+  --color-paper: #ffffff;
+  --color-paper-surface-alt: #f1f5f9;
+  --color-paper-border-dashed: #cbd5e1;
+  --color-paper-border-subtle: #e2e8f0;
+  --surface-subtle: rgba(0, 0, 0, 0.035);
+
+  /* ════════════ ESCALA DE ALFA ════════════
+     La deuda de color que este archivo vino a pagar eran 231 literales en 30
+     archivos, y 119 de ellos eran valores DISTINTOS. Declarar 119 tokens
+     habría sido cambiar un problema por otro: el design system deja de ser
+     una escala y pasa a ser un índice de cada pantalla.
+
+     Estos son los escalones. La convención es la de `DESIGN.md`
+     (`primary-soft: rgba(79, 124, 255, 0.10)`): un token por FAMILIA de color
+     y un token por PASO de alfa, no uno por literal.
+
+     Los pasos son 05, 08, 12, 20, 30, 40 y 65 porque son los que la app usa
+     de verdad: un velo apenas perceptible, un fondo de chip, un borde, un
+     hover, una marca de seleccion, un borde fuerte y una linea de punteado. Un
+     uso que caiga entre dos pasos se acerca al vecino: la diferencia es
+     invisible y la alternativa era que cada archivo inventara su propio alfa. */
+  --color-accent-a05: rgba(79, 124, 255, 0.05);
+  --color-accent-a08: rgba(79, 124, 255, 0.08);
+  --color-accent-a12: rgba(79, 124, 255, 0.12);
+  --color-accent-a20: rgba(79, 124, 255, 0.20);
+  --color-accent-a30: rgba(79, 124, 255, 0.30);
+  --color-accent-a40: rgba(79, 124, 255, 0.40);
+  --color-accent-a65: rgba(79, 124, 255, 0.65);
+
+  /* El NEGRO con alfa, que es la misma tinta que el borde y que el velo. En
+     claro va sobre superficies blancas; en oscuro el token se invierte a
+     blanco, porque un negro al 12% sobre `#18181c` no se ve. Es la razón de
+     que estos tokens existan en los dos temas y no sean un `rgba` fijo. */
+  --color-ink-a05: rgba(0, 0, 0, 0.05);
+  --color-ink-a08: rgba(0, 0, 0, 0.08);
+  --color-ink-a12: rgba(0, 0, 0, 0.12);
+  --color-ink-a20: rgba(0, 0, 0, 0.20);
+  --color-ink-a40: rgba(0, 0, 0, 0.40);
+  --color-ink-a55: rgba(0, 0, 0, 0.55);
+  /* El blanco con alfa: lo que se pone ENCIMA de una foto o de un color
+     saturated —el velo de "sin imagen", la marca de agua de una miniatura—.
+     No se invierte en oscuro porque no es un tinte de superficie: es una
+     capa, y una capa blanca sobre un fondo oscuro es lo que tiene que ser. */
+  --color-on-media-a05: rgba(255, 255, 255, 0.05);
+  --color-on-media-a08: rgba(255, 255, 255, 0.08);
+  --color-on-media-a30: rgba(255, 255, 255, 0.30);
+  --color-on-media-a70: rgba(255, 255, 255, 0.70);
+  --color-on-media-a90: rgba(255, 255, 255, 0.90);
+
+  /* Las familias SEMÁNTICAS con alfa. El color entero ya existe
+     (`--color-warning`, `--color-danger`, `--color-success`): lo que faltaba
+     era el paso suave, que es lo que se pinta de fondo de un chip o de una
+     insignia. Antes cada uno escribía su propio `rgba` con el alfa que le
+     parecía bien, y por eso había seis rosados distintos para el mismo
+     "esto es una advertencia". */
+  --color-warning-a05: rgba(192, 86, 46, 0.05);
+  --color-warning-a08: rgba(192, 86, 46, 0.08);
+  --color-warning-a12: rgba(192, 86, 46, 0.12);
+  --color-warning-a30: rgba(192, 86, 46, 0.30);
+  --color-warning-a40: rgba(192, 86, 46, 0.40);
+  --color-danger-a05: rgba(220, 38, 38, 0.05);
+  --color-danger-a08: rgba(220, 38, 38, 0.08);
+  --color-danger-a12: rgba(220, 38, 38, 0.12);
+  --color-danger-a30: rgba(220, 38, 38, 0.30);
+  --color-success-a12: rgba(47, 133, 90, 0.10);
+  --color-success-a14: rgba(47, 133, 90, 0.13);
+
+  /* Los motores de revisión, que son un SEGUNDO conjunto de colores: el
+     violeta del detector de IA, el cian de figuras y tablas. No son la
+     severidad —un hallazgo de IA no es un error— así que no se mezclan con
+     `--color-danger`. Vienen con su paso suave porque la insignia del motor
+     se pinta de su color al 12%. */
+  --color-engine-ia: #7c3aed;
+  --color-engine-ia-a08: rgba(124, 58, 237, 0.08);
+  --color-engine-ia-a12: rgba(124, 58, 237, 0.12);
+  --color-engine-ia-a30: rgba(124, 58, 237, 0.30);
+  /* Los tres pasos que la rampa de `--ia-nivel-*` necesita: los mismos
+     escalones de alfa de las demás familias —20, 40 y 65— y ningún color nuevo.
+     La rampa del detector pasó de ser cuatro tonos de `--color-danger` a ser
+     cuatro pasos de ESTA tinta, que es justo lo que dice el comentario de
+     arriba: un hallazgo de IA no es un error. */
+  --color-engine-ia-a20: rgba(124, 58, 237, 0.20);
+  --color-engine-ia-a40: rgba(124, 58, 237, 0.40);
+  --color-engine-ia-a65: rgba(124, 58, 237, 0.65);
+  --color-engine-tables: #06b6d4;
+  --color-engine-tables-a12: rgba(6, 182, 212, 0.12);
+
+  /* La PANTALLA DE INICIO, que tenía su propia paleta de tres azules y dos
+     grises para las tarjetas de atajos. Son los mismos que el resto de la
+     app con otro nombre, y por eso se declararon aparte. */
+  --color-ink-strong: #0f172a;
+  --color-ink-soft: #9ca3af;
+
+  /* TitleBar overlay (Electron) */
+  --titlebar-bg: #ffffff;
+  --titlebar-symbol-color: #1a1a2e;
+
+  /* ════════════ 2 · TIPOGRAFÍA ════════════ */
+  --font-sans: 'Inter', 'Segoe UI Variable', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Consolas', 'Courier New', monospace;
+  /* Títulos de interfaz (esquema, chips) y cuerpo editorial (hoja APA). */
+  --font-display: 'Outfit', 'Inter', system-ui, sans-serif;
+  --font-editorial: 'Newsreader', 'Georgia', serif;
+  --text-xs: 11px;
+  --text-sm: 13px;
+  --text-base: 14px;
+  --text-lg: 16px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 32px;
+  --leading-tight: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* ════════════ 3 · ESPACIO ════════════ */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* ════════════ 4 · BORDE ════════════ */
+  --border-width-1: 1px;
+  --border-width-2: 2px;
+  /* La escala de radio, completa y CORRIDA. Antes empezaba en 4px, y el código
+     usaba 2px, 3px, 6px y 7px: cuatro medidas fuera de la escala que la
+     obligaban a escribir el radio a mano, y R4 no podia distinguirlas de un
+     radio inventado. Agregar los escalones que faltaban —no un token por
+     literal— es lo que las deja entrar sin que la regla se haga de trampa.
+     Un radio que no esta en la escala se acerca al escalon vecino: el costo es
+     un pixel, y la alternativa era que la app tuviera ocho radios. */
+  --radius-none: 0px;
+  --radius-2xs: 2px;                       /* chips, badges,kbd */
+  --radius-xs: 6px;                        /* inputs, cards chicas */
+  --radius-sm: 4px;
+  --radius-md: 8px;                        /* el radio de la app */
+  --radius-lg: 12px;
+  --radius-xl: 18px;
+  --radius-full: 9999px;                   /* solo pills/avatares */
+
+  /* ════════════ 5 · SOMBRA ════════════ */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.10);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.14);
+  --shadow-card: 0 8px 28px rgba(0, 0, 0, 0.12);
+  --shadow-focus: 0 0 0 3px rgba(79, 124, 255, 0.2);
+  --shadow-panel-left: -4px 0 20px rgba(0, 0, 0, 0.06);
+  /* T20: la sombra de acento marca una selección, y la interior hunde una
+     miniatura. Los dos vivían como `rgba(...)` dentro de los componentes
+     CoverCarouselStudio, que es exactamente lo que un hex (o un rgba) en un
+     `.tsx` significa: un color que no cambia con el tema. */
+  --shadow-accent: 0 4px 14px rgba(79, 124, 255, 0.14);
+  --shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+  /* T20: el velo que pone un modal o una importación tapado encima del
+     contenido sin sacarlo del DOM. Vivía como `rgba(17, 24, 39, 0.18)` dentro
+     del componente, que es un color que no cambia con el tema. Negro con alfa
+     en vez de un tono de tinta: un velo tiene que apagar el contenido, no
+     teñirlo, así que en los dos temas es la misma tinta y solo cambia cuánto
+     apaga. */
+  --scrim-overlay: rgba(0, 0, 0, 0.18);
+
+  /* ════════════ ICONOS ════════════ */
+  --icon-size-sm: 14px;
+  --icon-size-md: 16px;
+  --icon-size-lg: 20px;
+  --icon-size-xl: 24px;
+  --icon-size-2xl: 40px;
+  --icon-stroke: 1.75;                     /* grosor uniforme en TODA la app */
+
+  /* ════════════ MOTION / Z ════════════ */
+  --transition-fast: 120ms ease-out;
+  --transition-base: 200ms ease-out;
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 900;
+  --z-modal: 1000;
+  --z-toast: 1200;
+  /* La capa de carga va POR DEBAJO de `--z-dropdown`, y no es una elección de
+     gusto: `RailFlyout` está en `--z-dropdown` y el rail es permanente por
+     AGENTS.md §1. Con la carga por encima, apretar "escanear" se llevaba la
+     pantalla entera y el usuario creía que le habían cambiado de vista. La
+     carga tapa el lienzo; nunca la navegación. */
+  --z-carga: 50;
+
+  /* La carga no es decoración: es la capa que tapa la app mientras trabaja. Por
+     eso es del color del canvas y no de una paleta propia, y por eso vive en un
+     token y no en un array de hex dentro del componente. Los tres heredan de
+     tokens que ya existen, así que los dos temas dicen lo mismo: el overlay no
+     tiene identidad de color propia. Un overlay con color propio es una segunda
+     paleta que mantener, y ya se vio lo que cuesta. */
+  --carga-fondo: var(--color-bg-canvas);
+  --carga-velo: var(--scrim-overlay);
+  --carga-tinta: var(--color-text-primary);
+
+  /* ════════════ ALIASES LEGACY (flujo -> tokens canónicos) ════════════ */
+  --app-bg: var(--color-bg-canvas);
+  --sidebar-bg: var(--color-bg-surface);
+  --canvas-bg: var(--color-bg-surface-alt);
+  --surface-elevated: var(--color-bg-surface-hover);
+  --surface-subtle: rgba(0, 0, 0, 0.035);
+  --paper-bg: var(--color-paper);
+  --statusbar-bg: var(--color-bg-canvas);
+  /* T20: `--titlebar-bg: var(--titlebar-bg)` y `--shadow-card:
+     var(--shadow-card)` estaban aquí, debajo de sus valores reales. Un token
+     que se declara a sí mismo no declara nada (la autorreferencia es inválida
+     y el navegador la descarta), así que eran dos líneas que parecían tokens y
+     no eran nada. El valor de verdad está arriba, en su bloque. */
+  --text-main: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --text-muted: var(--color-text-tertiary);
+  --border-subtle: var(--color-border-subtle);
+  --border-strong: var(--color-border-strong);
+  --accent-primary: var(--color-accent);
+  --accent-primary-hover: var(--color-accent-hover);
+  --accent-secondary: var(--color-accent-secondary);
+  /* Semánticos canónicos: --color-success / --color-warning / --color-danger
+     (los alias --accent-success|warning|danger fueron eliminados). */
+  /* Alias cortos de ESTADO para las superficies de Revisión & IA. No abren una
+     paleta nueva: cada uno apunta al token canónico que ya existe y que se
+     declara en los dos temas, así que hereda el valor del tema activo. El
+     sufijo `-bg` es el paso de alfa de fondo de un chip; el color entero es la
+     tinta. */
+  --success: var(--color-success);
+  --warning: var(--color-warning);
+  --danger: var(--color-danger);
+  --danger-bg: var(--color-danger-a12);
+  --warning-bg: var(--color-warning-a12);
+  --accent-bg: var(--color-accent-a12);
+  --font-family: var(--font-sans);
+  --wizard-step-active: var(--color-accent);
+  --wizard-step-complete: var(--color-accent-secondary);
+  --wizard-step-pending: var(--color-text-tertiary);
+  --toast-bg: var(--color-bg-surface-hover);
+  --toast-border: var(--color-border-strong);
+  --ribbon-bg: var(--color-bg-surface);
+  --border-color: var(--color-border-strong);
+  --bg-base: var(--color-bg-surface-alt);
+  --word-blue: var(--color-accent);
+  --word-blue-hover: var(--color-accent-hover);
+  --word-blue-light: var(--color-accent-soft);
+  --word-green: var(--color-accent-secondary);
+  --word-green-hover: var(--color-accent-secondary);
+  /* Canvas Paper Tokens (Authentic APA 7 Sheet - High Contrast) */
+  --paper-white: #ffffff;
+  --paper-ink: #111827;
+  --paper-muted: #6b7280;
+  --paper-alt: #f9fafb;
+  --paper-line: #e5e7eb;
+  --paper-line-strong: #d1d5db;
+  --paper-faint: #f3f4f6;
+  --paper-near: #f8fafc;
+  --paper-slate: #475569;
+  --paper-slate2: #64748b;
+  /* Personaje humano (puerta de Fase 5): piel morena, camisa celeste, pelo
+     desordenado, parche en un ojo. Definidos una vez, como toda la paleta. */
+  --mascot-skin: #a9714b;
+  --mascot-shirt: #8ec9f0;
+  --mascot-hair: #241d1a;
+  --mascot-pants: #3b4a63;
+  --mascot-shoe: #2b2b2b;
+  --mascot-ink: var(--text-main);
+}
+
+/* ════════════ TEMA OSCURO ════════════ */
+:root[data-theme="dark"] {
+  --color-bg-canvas: #0f0f11;
+  --color-bg-surface: #18181c;
+  --color-bg-surface-alt: #202028;
+  --color-bg-surface-hover: #262630;
+  --color-border-subtle: rgba(255, 255, 255, 0.10);
+  --color-border-strong: rgba(255, 255, 255, 0.18);
+  --color-border-focus: #4f7cff;
+  --color-text-primary: #f2f2f5;
+  --color-text-secondary: #c4c4d4;
+  --color-text-tertiary: #a0a0b4;
+  --color-text-on-accent: #ffffff;
+  --color-accent: #4f7cff;
+  --color-accent-hover: #7ba0ff;
+  --color-accent-pressed: #3b66e0;
+  --color-accent-soft: rgba(79, 124, 255, 0.15);
+  /* En oscuro la tinta profunda se ACLARA: un `#2f4a94` sobre `#18181c` es
+     invisible. La marca conserva la misma jerarquía —tinte apagado, tinta
+     legible, subrayado tenue— sin el azul fluorescente. */
+  --color-accent-deep: #9fb4e6;
+  --mark-citation-bg: rgba(79, 124, 255, 0.18);
+  --mark-citation-ink: #cdd9f2;
+  --mark-ai-bg: rgba(156, 163, 175, 0.22);
+
+  /* ════════════ ESCALA DE ALFA (OSCURO) ════════════
+     La escala de acento se declara con MÁS alfa en los pasos bajos, por la
+     misma razón que `--mark-ai-bg`: la superficie oscura se come el tinte
+     suave, y un chip al 5% de azul sobre `#18181c` no se distingue del
+     fondo. Los pasos altos no se tocan: a partir de 0.20 los dos temas
+     coinciden, y subirlo en oscuro taparía el contenido de debajo.
+
+     Y la tinta con alfa SE INVIERTE: en claro es negro, en oscuro es blanco,
+     que es la tinta de este tema. Un `rgba(0,0,0,0.12)` escrito a mano en
+     un `.tsx` es un color que no cambia con el tema, y por eso esta regla
+     existe: no es que el negro al 12% se vea igual en los dos, es que en
+     oscuro no se ve. */
+  --color-accent-a05: rgba(79, 124, 255, 0.08);
+  --color-accent-a08: rgba(79, 124, 255, 0.12);
+  --color-accent-a12: rgba(79, 124, 255, 0.16);
+  --color-accent-a20: rgba(79, 124, 255, 0.22);
+  --color-accent-a30: rgba(79, 124, 255, 0.30);
+  --color-accent-a40: rgba(79, 124, 255, 0.40);
+  --color-accent-a65: rgba(79, 124, 255, 0.65);
+
+  --color-ink-a05: rgba(255, 255, 255, 0.05);
+  --color-ink-a08: rgba(255, 255, 255, 0.08);
+  --color-ink-a12: rgba(255, 255, 255, 0.12);
+  --color-ink-a20: rgba(255, 255, 255, 0.20);
+  --color-ink-a40: rgba(255, 255, 255, 0.40);
+  --color-ink-a55: rgba(255, 255, 255, 0.55);
+  /* `--color-on-media-*` NO se invierte, y no es un olvido: es una capa sobre
+     una foto o sobre un color saturado, no un tinte de superficie. Un velo
+     blanco tiene que seguir siendo blanco con el tema oscuro. */
+  --color-on-media-a05: rgba(255, 255, 255, 0.05);
+  --color-on-media-a08: rgba(255, 255, 255, 0.08);
+  --color-on-media-a30: rgba(255, 255, 255, 0.30);
+  --color-on-media-a70: rgba(255, 255, 255, 0.70);
+  --color-on-media-a90: rgba(255, 255, 255, 0.90);
+
+  /* Las familias semánticas y los motores NO cambian con el tema, y por eso
+     se repiten con el MISMO valor. No es que "no haga falta" declararlos: un
+     token que existe en un solo tema es un bug en el otro, y el que lo
+     detecta es R3. */
+  --color-warning-a05: rgba(224, 138, 99, 0.05);
+  --color-warning-a08: rgba(224, 138, 99, 0.08);
+  --color-warning-a12: rgba(224, 138, 99, 0.12);
+  --color-warning-a30: rgba(224, 138, 99, 0.30);
+  --color-warning-a40: rgba(224, 138, 99, 0.40);
+  --color-danger-a05: rgba(220, 38, 38, 0.05);
+  --color-danger-a08: rgba(220, 38, 38, 0.08);
+  --color-danger-a12: rgba(220, 38, 38, 0.12);
+  --color-danger-a30: rgba(220, 38, 38, 0.30);
+  --color-success-a12: rgba(63, 156, 109, 0.16);
+  --color-success-a14: rgba(63, 156, 109, 0.20);
+
+  --color-engine-ia: #7c3aed;
+  --color-engine-ia-a08: rgba(124, 58, 237, 0.08);
+  --color-engine-ia-a12: rgba(124, 58, 237, 0.12);
+  --color-engine-ia-a30: rgba(124, 58, 237, 0.30);
+  /* Los tres pasos que la rampa de `--ia-nivel-*` necesita y que esta familia no
+     tenía: los mismos escalones de alfa de las demás familias —20, 40 y 65— y
+     ningún color nuevo. La rampa del detector pasó de ser cuatro tonos del
+     rojo de error a ser cuatro pasos de la tinta de este motor. */
+  --color-engine-ia-a20: rgba(124, 58, 237, 0.20);
+  --color-engine-ia-a40: rgba(124, 58, 237, 0.40);
+  --color-engine-ia-a65: rgba(124, 58, 237, 0.65);
+  --color-engine-tables: #06b6d4;
+  --color-engine-tables-a12: rgba(6, 182, 212, 0.12);
+
+  --color-ink-strong: #0f172a;
+  --color-ink-soft: #9ca3af;
+
+  /* La rampa de IA, en oscuro, con MÁS alfa en los escalones bajos: la
+     superficie oscura se come un tinte suave (es lo mismo que pasó con
+     `--mark-ai-bg` y está anotado arriba). Los cuatro son pasos de la tinta del
+     motor IA, no del rojo de error, por el mismo motivo que en claro. */
+  --ia-nivel-1: var(--color-engine-ia-a12);
+  --ia-nivel-2: var(--color-engine-ia-a30);
+  --ia-nivel-3: var(--color-engine-ia-a65);
+  --ia-nivel-4: var(--color-engine-ia);
+  --color-success: #3f9c6d;
+  --color-warning: #e08a63;
+  --color-danger: #ff4d4f;
+  --color-info: #4f7cff;
+  /* Los alias cortos de estado, repetidos para que un token declarado en un
+     solo tema no sea la mitad de un bug. Apuntan a la familia canónica de
+     arriba, que ya cambia con el tema. */
+  --success: var(--color-success);
+  --warning: var(--color-warning);
+  --danger: var(--color-danger);
+  --danger-bg: var(--color-danger-a12);
+  --warning-bg: var(--color-warning-a12);
+  --accent-bg: var(--color-accent-a12);
+  --color-navy-header: #0f172a;
+  --color-navy-header-text: #ffffff;
+  --color-paper: #ffffff;
+  --color-paper-surface-alt: #f1f5f9;
+  --color-paper-border-dashed: #cbd5e1;
+  --color-paper-border-subtle: #e2e8f0;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 16px 40px rgba(0, 0, 0, 0.4);
+  --shadow-focus: 0 0 0 3px rgba(79, 124, 255, 0.25);
+  /* Las dos sombras de T20 también existen en oscuro: la de acento sube de
+     alfa porque la superficie oscura se come el halo azul, y la interior
+     invierte la fuente (una sombra negra sobre algo casi negro no se ve). */
+  --shadow-accent: 0 4px 14px rgba(79, 124, 255, 0.32);
+  --shadow-inset: inset 0 1px 2px rgba(255, 255, 255, 0.06);
+  /* El velo sube de alfa en oscuro por el mismo motivo que `--mark-ai-bg` y las
+     sombras de acento: la superficie oscura se come el velo suave. */
+  --scrim-overlay: rgba(0, 0, 0, 0.32);
+  --surface-subtle: rgba(255, 255, 255, 0.04);
+
+  /* Canvas Paper Tokens (Authentic APA 7 Sheet - Always White & Crisp Ink in Dark Mode) */
+  --paper-white: #ffffff;
+  --paper-ink: #111827;
+  --paper-muted: #6b7280;
+  --paper-alt: #f9fafb;
+  --paper-line: #e5e7eb;
+  --paper-line-strong: #d1d5db;
+  --paper-faint: #f3f4f6;
+  --paper-near: #f8fafc;
+  --paper-slate: #475569;
+  --paper-slate2: #64748b;
+
+  /* TitleBar overlay (Electron) */
+  --titlebar-bg: #18181c;
+  --titlebar-symbol-color: #f2f2f5;
+
+  /* La capa de carga, en oscuro. Los MISMOS tres valores que en claro, y esa es
+     la parte importante: no porque no haga falta distinguirlos, sino porque la
+     carga no tiene identidad de color propia. Un token declarado en un solo
+     tema es la mitad de un bug, y esta fase no va a dejar la otra mitad suelta. */
+  --carga-fondo: var(--color-bg-canvas);
+  --carga-velo: var(--scrim-overlay);
+  --carga-tinta: var(--color-text-primary);
+}
+
+/* ── Iconos: stroke-width uniforme (regla §1.6) ──────────────────────────── */
+svg.lucide {
+  stroke-width: var(--icon-stroke);
+}
+
+/* ── Focus visible accesible (regla §1.5) ────────────────────────────────── */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* ── Scrollbar visible y estilizada (Fase 1 §3.2 fix #3) ──────────────────── */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary);
+  background-clip: padding-box;
+}
+
+/* Global resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--app-bg);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: var(--sidebar-bg);
+  color: var(--text-secondary);
+}
+
+/* Canvas backdrop */
+.canvas-backdrop {
+  background-color: var(--canvas-bg);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 20px;
+  height: 100%;
+}
+
+/* ════════════ TAMAÑO DE HOJA (medidas, no colores) ════════════
+ *
+ * Viven fuera de los bloques de tema a propósito: el papel no cambia con el
+ * tema —`AGENTS.md` lo dice, la hoja es blanca en claro y en oscuro—, y un
+ * token que se declara dos veces es un token que puede divergir.
+ *
+ * EL DEFAULT ES CARTA, y antes era A4. `DESIGN.md:75` pide 8.5" x 11", el
+ * lienzo ya paginaba con Carta (`pageGeometry.ts`), y estas dos líneas eran la
+ * contradicción: el papel de acá y el papel del `.docx` no eran el mismo, y
+ * ninguno de los dos miraba al otro. Ahora uno elige, con el atributo
+ * `data-page-size` en `<html>` —el mismo patrón que `data-theme`—, y el
+ * selector de la pestaña Documento escribe en `rules.page_size`.
+ *
+ * Los dos tamaños están siempre declarados: el que no se elige no se borra, se
+ * deja de usar. Un token de A4 que solo existe mientras nadie elige A4 es un
+ * token que un día deja de compilar y nadie sabe por qué. */
+:root {
+  --paper-width: 215.9mm;   /* Carta: 8.5" */
+  --paper-height: 279.4mm;  /* Carta: 11" */
+  --paper-width-a4: 210mm;
+  --paper-height-a4: 297mm;
+}
+
+:root[data-page-size="a4"] {
+  --paper-width: var(--paper-width-a4);
+  --paper-height: var(--paper-height-a4);
+}
+
+/* Paper */
+.paper {
+  background-color: var(--paper-bg);
+  width: var(--paper-width);
+  min-height: var(--paper-height);
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--radius-sm);
+}
+
+/* Titlebar */
+.titlebar {
+  height: 32px;
+  background-color: var(--titlebar-bg);
+  -webkit-app-region: drag;
+  display: flex;
+  align-items: center;
+  padding-left: 12px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+/* ── Regiones de arrastre de la ventana (Electron titlebar overlay) ────────── */
+.app-drag {
+  -webkit-app-region: drag;
+}
+.app-drag button,
+.app-no-drag {
+  -webkit-app-region: no-drag;
+}
+
+/* Status bar */
+.statusbar {
+  height: 24px;
+  background-color: var(--statusbar-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* Buttons – strict adherence to mega-prompt Phase 1 */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 8px 16px;
+  font-size: var(--text-sm);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  border: 1px solid transparent; /* default transparent border to avoid layout shift with secondary */
+  transition: background-color var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background-color: var(--color-accent);
+  color: var(--color-text-on-accent);
+}
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--color-accent-hover);
+}
+.btn-primary:active:not(:disabled) {
+  background-color: var(--color-accent-pressed);
+}
+.btn-secondary {
+  background-color: var(--color-bg-surface);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border-strong);
+}
+.btn-secondary:hover:not(:disabled) {
+  background-color: var(--color-bg-surface-hover);
+}
+.btn-ghost {
+  background-color: transparent;
+  color: var(--color-text-secondary);
+}
+.btn-ghost:hover:not(:disabled) {
+  background-color: var(--color-bg-surface-hover);
+  color: var(--color-text-primary);
+}
+/* button sizes */
+.btn-sm {
+  height: 28px;
+  padding: 0 12px;
+  font-size: var(--text-sm);
+}
+.btn-sm svg { width: 14px; height: 14px; }
+.btn-md {
+  height: 36px;
+  padding: 0 16px;
+  font-size: var(--text-base);
+}
+.btn-md svg { width: 16px; height: 16px; }
+.btn-lg {
+  height: 44px;
+  padding: 0 20px;
+  font-size: var(--text-lg);
+}
+.btn-lg svg { width: 20px; height: 20px; }
+
+/* Input */
+.input-base {
+  height: 36px;
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-bg-surface);
+  border: var(--border-width-1) solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-base);
+  color: var(--color-text-primary);
+  width: 100%;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.input-base::placeholder {
+  color: var(--color-text-tertiary);
+}
+.input-base:focus-visible {
+  outline: none;
+  border-color: var(--color-border-focus);
+  box-shadow: var(--shadow-focus);
+}
+.input-base:disabled {
+  background-color: var(--color-bg-surface-alt);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.input-error {
+  border-color: var(--color-danger);
+}
+.input-error:focus-visible {
+  box-shadow: 0 0 0 3px rgba(255, 77, 79, 0.18);
+}
+.input-label {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-1);
+}
+.input-helper {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--color-text-tertiary);
+  margin-top: var(--space-1);
+}
+.input-helper-error {
+  color: var(--color-danger);
+}
+
+/* Wizard step pills */
+.wizard-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.wizard-step .step-pill {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background-color: rgba(255, 255, 255, 0.15);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: var(--font-semibold);
+  transition: background-color 0.2s ease;
+}
+.wizard-step .step-pill.active {
+  background: var(--accent-primary);
+  color: #fff;
+}
+.wizard-step .step-pill.completed {
+  background: var(--color-success);
+  color: #fff;
+}
+.wizard-step .connector {
+  flex: 1;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Search input */
+.search-input {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  color: var(--text-main);
+  width: 100%;
+}
+.search-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Tree items */
+.tree-item {
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+.tree-item:hover {
+  background: var(--color-accent-soft);
+}
+.tree-item.active {
+  background: var(--color-accent-soft);
+}
+
+/* Modal */
+.modal {
+  background: var(--sidebar-bg);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  color: var(--text-main);
+}
+
+/* Card */
+.card {
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+.card:hover {
+  background: var(--color-accent-soft);
+  border-color: rgba(79, 124, 255, 0.22);
+}
+.card.selected {
+  border-color: var(--accent-primary);
+  background: var(--color-accent-soft);
+  box-shadow: 0 0 0 1px rgba(79, 124, 255, 0.18) inset;
+}
+
+.panel {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+@keyframes modal-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modal-shell-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.modal-backdrop {
+  animation: modal-backdrop-in 160ms ease-out;
+}
+
+.modal-shell {
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  color: var(--text-main);
+  animation: modal-shell-in 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wizard-step-pill {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: var(--font-bold);
+}
+
+/* Tooltip */
+.tooltip {
+  background: var(--sidebar-bg);
+  color: var(--text-main);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+}
+
+/* ════════════ Vistas de paso 6 y 7 (Validador) ════════════ */
+.view-page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 24px;
+}
+.view-page-inner {
+  max-width: 980px;
+  margin: 0 auto;
+}
+.view-page-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.semaphore-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+.semaphore-stat {
+  border-radius: var(--radius-lg);
+  border: var(--border-width-1) solid var(--color-border-subtle);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  background: var(--color-bg-surface);
+}
+.semaphore-stat-green { border-color: var(--color-success); }
+.semaphore-stat-yellow { border-color: var(--color-warning); }
+.semaphore-stat-red { border-color: var(--color-danger); }
+.semaphore-count {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--color-text-primary);
+}
+.semaphore-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+.validation-issue {
+  border-radius: var(--radius-md);
+  border: var(--border-width-1) solid var(--color-border-subtle);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-2);
+  background: var(--color-bg-surface);
+}
+.validation-issue-error { border-color: var(--color-danger); }
+.validation-issue-warning { border-color: var(--color-warning); }
+.validation-issue-ok { border-color: var(--color-success); }
+.validation-issue-message {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+.validation-issue-suggestion {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  margin: var(--space-1) 0 0 0;
+}
+
+.form-select,
+.form-textarea {
+  width: 100%;
+  background: var(--color-bg-surface);
+  border: var(--border-width-1) solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-base);
+  font-family: var(--font-sans);
+}
+.form-select:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--color-border-focus);
+  box-shadow: var(--shadow-focus);
+}
+.form-textarea {
+  resize: vertical;
+  min-height: 72px;
+}
+
+.text-xs { font-size: var(--text-xs); }
+.text-sm { font-size: var(--text-sm); }
+.text-tertiary { color: var(--color-text-tertiary); }
+.font-semibold { font-weight: var(--font-semibold); }
+
+/* ════════════ Animaciones de transición entre pasos wizard ════════════ */
+@keyframes wk-step-enter {
+  from { opacity: 0; transform: translateX(12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.wizard-step-enter {
+  animation: wk-step-enter 280ms ease-out;
+}
+@keyframes wk-step-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.wizard-step-fade {
+  animation: wk-step-fade 200ms ease-out;
+}
+
+/* ════════════ Taller de Activos Gráficos (Fase 3) ════════════
+   Movimiento sobrio al estilo de la app: entrada del lienzo, aparición
+   escalonada de filas y fundido de la imagen al cargar. Todo desactivado
+   bajo `prefers-reduced-motion`. */
+@keyframes fig-fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fig-taller {
+  animation: fig-fade-up var(--transition-base) both;
+}
+
+@keyframes fig-row-in {
+  from { opacity: 0; transform: translateX(-4px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.fig-row {
+  animation: fig-row-in var(--transition-base) both;
+}
+
+@keyframes fig-img-in {
+  from { opacity: 0; transform: scale(0.985); }
+  to { opacity: 1; transform: scale(1); }
+}
+.fig-media-img {
+  animation: fig-img-in 320ms ease-out both;
+}
+
+/* Botón de control flotante sobre la imagen */
+.fig-media-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-xs, 4px);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+.fig-media-btn:hover {
+  background: var(--color-bg-surface-hover);
+  color: var(--color-accent);
+}
+.fig-media-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+/* Botón sólido de aplicar sugerencia */
+.fig-apply-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-on-accent);
+  background: var(--color-accent);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+.fig-apply-btn:hover {
+  background: var(--color-accent-hover);
+}
+
+/* Acción secundaria del globo de la mascota: regenerar la sugerencia */
+.fig-regenerate-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast);
+}
+.fig-regenerate-btn:hover {
+  border-color: var(--color-border-strong);
+  color: var(--color-accent);
+  background: var(--color-bg-surface-hover);
+}
+.fig-regenerate-btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+/* Etiqueta pequeña en versalitas para metadatos de la sugerencia */
+.fig-kicker {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-tertiary);
+}
+
+/* El papel del manuscrito conserva su serif propio, ajeno al chrome Inter */
+.fig-paper {
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* Preset de estilo: la miniatura ES la descripción; la etiqueta va debajo en
+   dos columnas, sin párrafos redundantes. */
+.fig-preset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 8px 8px;
+  background: var(--color-bg-surface-alt);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  text-align: center;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast);
+}
+.fig-preset:hover {
+  border-color: var(--color-border-strong);
+  background: var(--color-bg-surface-hover);
+}
+.fig-preset:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+.fig-preset[aria-pressed='true'] {
+  border-color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+.fig-preset-label {
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--color-text-primary);
+}
+.fig-preset-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 1px 5px;
+  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+  background: var(--color-ink-a08);
+}
+.fig-preset[aria-pressed='true'] .fig-preset-badge {
+  color: var(--color-text-on-accent);
+  background: var(--color-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fig-taller,
+  .fig-row,
+  .fig-media-img,
+  .wizard-step-enter,
+  .wizard-step-fade {
+    animation: none !important;
+  }
+}
+
+/* ════════════ Cursor de edición interactiva en el lienzo ════════════ */
+[id^="paper-elem-"][data-hover="true"] {
+  cursor: text;
+}
+
+/* ════════════ COMENTARIO STYLE WHATSAPP (previsualizador) ════════════ */
+/* Burbuja de chat en FLUJO (no overlay): cuelga debajo del elemento y
+   empuja el siguiente párrafo, así nunca tapa el texto (antes era absolute
+   y se superponía con el párrafo siguiente en documentos densos). */
+
+.wa-comment {
+  position: relative;
+  top: auto;
+  right: auto;
+  width: min(244px, 100%);
+  margin: 8px 2px 0 auto;
+  z-index: 40;
+  font-family: var(--font-sans);
+  animation: wa-pop 0.2s ease-out both;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
+}
+
+.wa-bubble {
+  position: relative;
+  background: var(--surface-elevated, #ffffff);
+  color: var(--text-main, #111b21);
+  border-radius: var(--radius-md, 8px);
+  padding: 8px 10px 6px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.wa-bubble:hover {
+  border-color: var(--border-strong, #cbd5e1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.wa-bubble-positive {
+  border-left: 3px solid var(--color-success);
+  background: var(--surface-elevated, #ffffff);
+}
+
+.wa-bubble-ghost {
+  border-left: 3px solid var(--color-danger);
+  background: var(--surface-elevated, #ffffff);
+}
+
+.wa-bubble-warning {
+  border-left: 3px solid var(--color-warning);
+  background: var(--surface-elevated, #ffffff);
+}
+
+.wa-bubble-ai {
+  border-left: 3px solid var(--accent-primary, #4f7cff);
+  background: var(--surface-elevated, #ffffff);
+}
+
+.wa-bubble-tables {
+  border-left: 3px solid #06b6d4;
+  background: var(--surface-elevated, #ffffff);
+}
+
+.wa-bubble-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-secondary);
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.wa-line {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 7px;
+  min-width: 0;
+}
+
+.wa-emoji {
+  font-size: 19px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  background: rgba(240, 244, 255, 0.7);
+  border-radius: 50%;
+  transform-origin: center;
+  animation: wa-blink 1.8s ease-in-out 0.8s infinite;
+}
+
+.wa-text {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #111b21;
+  flex: 1;
+  min-width: 0;
+}
+
+.wa-time {
+  font-size: 9px;
+  font-weight: 600;
+  color: #5f6f7c;
+  text-align: right;
+  letter-spacing: 0.2px;
+  margin-top: 3px;
+}
+
+/* Colita superior que apunta al elemento (como el WhatsApp recibido) */
+.wa-tail {
+  position: absolute;
+  left: 16px;
+  top: -6px;
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  clip-path: polygon(0 100%, 50% 0, 100% 100%);
+}
+
+/* ── GUTTER LATERAL (columna de comentarios fuera de la hoja, estilo Word) ──
+   La burbuja cuelga del borde izquierdo de la columna, con la colita
+   apuntando hacia el documento (a la izquierda) y el fragmento marcado
+   en amarillo dentro del párrafo. */
+.wa-gutter .wa-comment {
+  margin: 0;
+}
+.wa-gutter .wa-bubble {
+  border-radius: var(--radius-md, 8px);
+}
+.wa-gutter .wa-tail {
+  left: -6px;
+  top: 16px;
+  clip-path: polygon(0 50%, 100% 0, 100% 100%);
+}
+
+/* Indicador "escribiendo…" (tres puntos rebotando) */
+.wa-bubble-typing {
+  animation: wa-pop 0.35s ease-out both;
+}
+.wa-typing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 0;
+  min-height: 20px;
+}
+.wa-typing span {
+  width: 7px;
+  height: 7px;
+  background: #8696a0;
+  border-radius: 50%;
+  animation: wa-typing-dot 1.2s ease-in-out infinite;
+}
+.wa-typing span:nth-child(2) { animation-delay: 0.2s; }
+.wa-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes wa-typing-dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-5px); opacity: 1; }
+}
+
+/* Comentario positivo (sección limpia) */
+.wa-comment-positive .wa-bubble {
+  background: #e7f8ee;
+  border: 1px solid rgba(45, 106, 79, 0.25);
+}
+.wa-comment-positive .wa-tail {
+  background: #e7f8ee;
+}
+
+/* ── Mejoras del sistema de comentarios inline (WhatsApp style) ── */
+
+/* Avatar: mascota expresiva en lugar del emoji estático */
+.wa-avatar {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(240, 244, 255, 0.7);
+  border-radius: 50%;
+}
+
+/* Fila de acciones dentro de la burbuja */
+.wa-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+.wa-actions .wa-time {
+  margin-top: 0;
+  margin-left: auto;
+}
+
+/* Micro-botón "Resolver" (acción rápida, sutil) */
+.wa-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: rgba(79, 124, 255, 0.12);
+  color: #1d4ed8;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s ease;
+}
+.wa-action:hover {
+  background: rgba(79, 124, 255, 0.22);
+}
+
+/* Botón "X" para ignorar */
+.wa-dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  color: #9aa7b1;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 0;
+}
+.wa-dismiss:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: #5f6f7c;
+}
+
+/* Estado "descartando": tachado gris claro + desvanecido antes de esfumarse */
+.wa-comment-dismissing {
+  pointer-events: none;
+}
+.wa-comment-dismissing .wa-bubble {
+  filter: grayscale(1);
+  opacity: 0.5;
+  transform: translateX(14px);
+  transition: transform 0.45s ease, opacity 0.45s ease, filter 0.45s ease;
+}
+.wa-comment-dismissing .wa-text {
+  text-decoration: line-through;
+  color: #6b7280;
+}
+
+/* Estado "resuelto": cara festiva + confirmación */
+.wa-bubble-resolved {
+  background: #e7f8ee;
+  border: 1px solid rgba(45, 106, 79, 0.28);
+  animation: wa-pop 0.35s ease-out both;
+}
+.wa-bubble-resolved .wa-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #2f7d4f;
+}
+
+/* ════════════ PERSONAJE HUMANO (puerta de Fase 5) ════════════ */
+.human-mascot { overflow: visible; }
+.human-mascot .human-mascot-skin { fill: var(--mascot-skin); stroke: var(--mascot-ink); stroke-width: 1.6; stroke-linejoin: round; }
+.human-mascot .human-mascot-shirt { fill: var(--mascot-shirt); stroke: var(--mascot-ink); stroke-width: 1.6; stroke-linejoin: round; }
+.human-mascot .human-mascot-seam { fill: none; stroke: var(--mascot-ink); stroke-width: 1.1; stroke-linecap: round; }
+.human-mascot .human-mascot-btn { fill: var(--mascot-ink); }
+.human-mascot .human-mascot-hair { fill: var(--mascot-hair); stroke: var(--mascot-ink); stroke-width: 1.2; stroke-linejoin: round; }
+.human-mascot .human-mascot-strap { stroke: var(--mascot-ink); stroke-width: 2; stroke-linecap: round; }
+.human-mascot .human-mascot-patch,
+.human-mascot .human-mascot-eye { fill: var(--mascot-ink); }
+.human-mascot .human-mascot-pants { fill: var(--mascot-pants); stroke: var(--mascot-ink); stroke-width: 1.6; stroke-linejoin: round; }
+.human-mascot .human-mascot-shoe { fill: var(--mascot-shoe); stroke: var(--mascot-ink); stroke-width: 1.5; stroke-linejoin: round; }
+.human-mascot .human-mascot-mouth { fill: none; stroke: var(--mascot-hair); stroke-width: 1.6; stroke-linecap: round; }
+
+/* ════════════ MASCOTA FIJA (esquina inferior derecha, sobre el statusbar) ════════════ */
+.editorial-mascot {
+  overflow: visible;
+  transform-origin: 50% 70%;
+}
+.editorial-mascot-body,
+.editorial-mascot-highlighter-cap {
+  stroke: var(--text-main);
+  stroke-width: 1.7;
+}
+.editorial-mascot-highlighter-body { fill: var(--color-warning); }
+.editorial-mascot-highlighter-cap { fill: var(--color-danger); }
+.editorial-mascot-highlighter-mark { fill: var(--color-danger); }
+.editorial-mascot-ruler-body { fill: var(--color-success); }
+.editorial-mascot-reference-body { fill: var(--accent-primary); }
+.editorial-mascot-strike-body { fill: var(--color-danger); }
+.editorial-mascot-gear-body { fill: var(--color-accent); }
+.editorial-mascot-gear-diente {
+  fill: var(--color-accent);
+  stroke: var(--text-main);
+  stroke-width: 1.7;
+  stroke-linejoin: round;
+}
+.editorial-mascot-strike-tip { fill: var(--text-main); }
+.editorial-mascot-reference-tail { fill: var(--accent-primary); stroke: var(--text-main); stroke-width: 1.7; stroke-linejoin: round; }
+.editorial-mascot-ruler-ticks,
+.editorial-mascot-strike-line,
+.editorial-mascot-reference-lines,
+.editorial-mascot-quote,
+.editorial-mascot-arm,
+.editorial-mascot-brow,
+.editorial-mascot-mouth {
+  fill: none;
+  stroke: var(--text-main);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.editorial-mascot-quote { stroke: var(--paper-white); stroke-width: 2; }
+.editorial-mascot-reference-lines { stroke: var(--color-accent-soft); stroke-width: 1.4; }
+.editorial-mascot-eye { fill: var(--text-main); }
+.editorial-mascot-glint { fill: var(--paper-white); }
+.editorial-mascot-mouth-open { fill: var(--text-main); stroke: var(--text-main); stroke-width: 1; }
+.editorial-mascot-kind-highlighter { animation: editorial-highlighter-idle 2.8s ease-in-out infinite; }
+.editorial-mascot-kind-ruler { animation: editorial-ruler-idle 3.6s ease-in-out infinite; }
+.editorial-mascot-kind-reference { animation: editorial-reference-idle 3.2s ease-in-out infinite; }
+.editorial-mascot-kind-strike { animation: editorial-strike-idle 2.4s ease-in-out infinite; }
+.editorial-mascot-kind-gear { animation: editorial-gear-idle 4.4s ease-in-out infinite; }
+.editorial-mascot-kind-highlighter .editorial-mascot-arm-right { transform-origin: 52px 40px; transform-box: fill-box; animation: editorial-arm-wave 1.5s ease-in-out infinite; }
+.editorial-mascot-kind-reference .editorial-mascot-arm-left { animation: editorial-arm-point 2.2s ease-in-out infinite; transform-origin: 12px 39px; transform-box: fill-box; }
+@keyframes editorial-highlighter-idle { 0%, 100% { transform: rotate(-2deg) translateY(0); } 50% { transform: rotate(2deg) translateY(-4px); } }
+@keyframes editorial-ruler-idle { 0%, 100% { transform: rotate(-2deg) translateY(0); } 50% { transform: rotate(2deg) translateY(-3px); } }
+@keyframes editorial-reference-idle { 0%, 100% { transform: rotate(-2deg) translateY(2px); } 50% { transform: rotate(2deg) translateY(-5px); } }
+@keyframes editorial-strike-idle { 0%, 100% { transform: rotate(3deg) translateX(0); } 50% { transform: rotate(-2deg) translateX(4px); } }
+@keyframes editorial-gear-idle { 0%, 100% { transform: rotate(-1.5deg) translateY(0); } 50% { transform: rotate(1.5deg) translateY(-3px); } }
+@keyframes editorial-arm-wave { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-18deg); } }
+@keyframes editorial-arm-point { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(14deg); } }
+@keyframes editorial-face-pop {
+  0% { opacity: 0.75; }
+  100% { opacity: 1; }
+}
+.editorial-mascot-face {
+  animation: editorial-face-pop 200ms ease-out;
+}
+/* Movimiento por expresión: cada estado tiene su propio gesto, además del idle
+   del cuerpo (que vive en el svg). Se anima un grupo interno con `transform-box:
+   fill-box` para girar sobre su propia caja sin tocar la posición de la cara. */
+.editorial-mascot-motion {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+.editorial-mascot-motion-happy { animation: editorial-motion-happy 1.6s ease-in-out infinite; }
+.editorial-mascot-motion-worried { animation: editorial-motion-worried 1.1s ease-in-out infinite; }
+.editorial-mascot-motion-curious { animation: editorial-motion-curious 2.4s ease-in-out infinite; }
+.editorial-mascot-motion-excited { animation: editorial-motion-excited 0.9s ease-in-out infinite; }
+.editorial-mascot-motion-neutral { animation: editorial-motion-neutral 3.2s ease-in-out infinite; }
+@keyframes editorial-motion-happy {
+  0%, 100% { transform: translateY(0) scale(1); }
+  40% { transform: translateY(-1.5px) scale(1.06); }
+}
+@keyframes editorial-motion-worried {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-1.2px); }
+  75% { transform: translateX(1.2px); }
+}
+@keyframes editorial-motion-curious {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
+}
+@keyframes editorial-motion-excited {
+  0%, 100% { transform: scale(1); }
+  45% { transform: scale(1.14); }
+}
+@keyframes editorial-motion-neutral {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .editorial-mascot-face,
+  .editorial-mascot-motion {
+    animation: none;
+  }
+}
+.loading-mascot-walkers {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.loading-mascot-walker {
+  position: absolute;
+  display: block;
+  line-height: 0;
+  will-change: transform;
+}
+.loading-mascot-walker-highlighter {
+  left: -44px;
+  bottom: 14%;
+  animation: loading-walk-across 13s linear infinite;
+}
+.loading-mascot-walker-ruler {
+  right: 8%;
+  top: 17%;
+  animation: loading-walk-bob 4.6s ease-in-out 0.5s infinite;
+}
+.loading-mascot-walker-strike {
+  left: 13%;
+  top: 23%;
+  animation: loading-walk-peek 6.5s ease-in-out 1s infinite;
+}
+@keyframes loading-walk-across {
+  0% { transform: translateX(0) rotate(-8deg); }
+  45% { transform: translateX(42vw) translateY(-8px) rotate(7deg); }
+  100% { transform: translateX(108vw) rotate(-5deg); }
+}
+@keyframes loading-walk-bob {
+  0%, 100% { transform: translate(0, 0) rotate(2deg); }
+  50% { transform: translate(-20px, 22px) rotate(-6deg); }
+}
+@keyframes loading-walk-peek {
+  0%, 100% { transform: translate(-22px, 8px) rotate(-4deg); opacity: .25; }
+  35%, 65% { transform: translate(0, 0) rotate(5deg); opacity: .85; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .editorial-mascot,
+  .editorial-mascot-kind-highlighter .editorial-mascot-arm-right,
+  .editorial-mascot-kind-reference .editorial-mascot-arm-left,
+  .loading-mascot-walker { animation: none; }
+}
+
+.doc-mascot-corner {
+  position: fixed;
+  right: 16px;
+  bottom: 40px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  cursor: default;
+  animation: mascot-breathe 3s ease-in-out infinite;
+  transition: transform 0.25s ease;
+}
+.doc-mascot-corner:hover {
+  transform: scale(1.1) rotate(-3deg);
+}
+.doc-mascot-label {
+  font-family: 'Baloo 2', 'Comic Neue', 'Segoe UI', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  padding: 2px 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+.doc-mascot-corner:hover .doc-mascot-label {
+  opacity: 1;
+}
+
+.doc-mascot-bubble {
+  position: absolute;
+  right: 58px;
+  top: -10px;
+  background: #ffffff;
+  color: #111b21;
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 7px 12px;
+  font-family: 'Baloo 2', 'Comic Neue', 'Segoe UI', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: var(--shadow-md);
+  animation: mascot-bubble-in 0.3s ease-out both;
+  z-index: 70;
+}
+.doc-mascot-bubble::after {
+  content: '';
+  position: absolute;
+  right: -7px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 8px solid #ffffff;
+}
+
+@keyframes mascot-bubble-in {
+  from { opacity: 0; transform: translateX(8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes mascot-breathe {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.03); }
+}
+
+/* ════════════ PANTALLA DE CARGA ESTILO JUEGO ════════════
+ * Ventana lateral flotante (esquina inferior derecha): muestra el progreso
+ * sin tapar el editor ni el menú de carga, y no bloquea la interacción.
+ * Al hacer hover se hace opaca para leer el tip completo. */
+.loading-tips {
+  position: fixed;
+  right: 20px;
+  bottom: 40px;
+  width: 300px;
+  z-index: 100;
+  pointer-events: none;
+  animation: loading-tip-side-in 0.3s ease-out both;
+}
+.loading-tips-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 12px 16px;
+  box-shadow: var(--shadow-lg);
+  pointer-events: auto;
+  opacity: 0.92;
+  transition: opacity 0.15s;
+}
+.loading-tips-card:hover {
+  opacity: 1;
+}
+.loading-tips-mascot {
+  position: relative;
+  flex-shrink: 0;
+}
+.loading-tips-dots {
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 3px;
+}
+.loading-tips-dots span {
+  width: 5px;
+  height: 5px;
+  background: var(--text-muted);
+  border-radius: 50%;
+  animation: wa-typing-dot 1.1s ease-in-out infinite;
+}
+.loading-tips-dots span:nth-child(2) { animation-delay: 0.18s; }
+.loading-tips-dots span:nth-child(3) { animation-delay: 0.36s; }
+.loading-tips-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.loading-tips-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* ── Comentario en burbuja (las frases de la mascota, sin comillas) ──
+   Parece un comentario/nota: burbuja redondeada + 💬 + cursiva + badge de modo. */
+.tip-comment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 12px 18px;
+  box-shadow: var(--shadow-md);
+  animation: loading-tip-in 0.3s ease-out both;
+  max-width: 100%;
+}
+.tip-comment-sm {
+  align-items: flex-start;
+  padding: 8px 12px;
+  border-radius: 12px;
+  box-shadow: none;
+}
+.tip-comment-badge {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--accent-primary);
+  letter-spacing: 0.01em;
+}
+.tip-comment-lg .tip-comment-badge {
+  font-size: 12px;
+  color: var(--accent-primary-hover);
+}
+.tip-comment-text {
+  font-style: italic;
+  color: var(--text-main);
+  line-height: 1.45;
+  font-size: 13px;
+  font-weight: 500;
+}
+.tip-comment-lg .tip-comment-text {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  line-height: 1.4;
+}
+.tip-comment-marker {
+  font-style: normal;
+  margin-right: 6px;
+  font-size: 0.9em;
+  opacity: 0.85;
+}
+
+/* ── Pantalla de carga FULLSCREEN (arranque del motor) ──
+   Ocupa todo el viewport: no se ve el inicio ni el editor mientras el
+   backend inicia. Mascota grande + frases rotativas centradas. */
+.loading-tips-fullscreen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  /* POR DEBAJO de `--z-dropdown`, que es donde vive `RailFlyout`. La carga
+     tapa el lienzo; nunca la navegación. Antes llevaba `z-index: 200` en la
+     clase y `zIndex: 9999` en el estilo en línea, que ganaba a la clase y se
+     llevaba por delante el rail, el flyout y el workbench. */
+  z-index: var(--z-carga);
+  overflow: hidden;
+  background: var(--carga-fondo);
+  color: var(--carga-tinta);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loading-tips-fullscreen-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 640px;
+  text-align: center;
+  padding: 24px;
+  box-sizing: border-box;
+}
+.loading-tips-fullscreen-title {
+  font-size: clamp(11px, 1.5vw, 13px);
+  font-weight: 700;
+  color: var(--carga-tinta);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.tip-comment-lg {
+  max-width: 560px;
+}
+
+/* ── Pantalla de carga FULLSCREEN MINIMALISTA (procesando documento) ──
+   Reemplaza la tarjeta inferior derecha por overlay 100% del viewport:
+   anillo giratorio limpio + mensaje + frase rotativa sutil. */
+.loading-tips-fullscreen--minimal {
+  background: var(--carga-fondo);
+}
+.loading-minimal-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+  padding: 24px;
+  width: 100%;
+  max-width: 560px;
+  box-sizing: border-box;
+}
+.loading-minimal-spinner {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 3px solid var(--border-subtle);
+  border-top-color: var(--accent-primary);
+  animation: spin 0.8s linear infinite;
+}
+.loading-minimal-title {
+  font-size: clamp(16px, 3vw, 22px);
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: 0.01em;
+}
+.loading-minimal-tip {
+  font-size: clamp(14px, 2.5vw, 20px);
+  font-weight: 700;
+  font-style: italic;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  animation: loading-tip-in 0.35s ease-out both;
+}
+
+/* ── Responsive: pantallas estrechas ────────────────────────────────────── */
+@media (max-width: 480px) {
+  .loading-tips-fullscreen-inner {
+    gap: 12px;
+    padding: 16px;
+  }
+  .loading-minimal-inner {
+    gap: 12px;
+    padding: 16px;
+  }
+  .loading-tips-fullscreen-title {
+    letter-spacing: 0.04em;
+  }
+  .tip-comment-lg {
+    max-width: 100%;
+  }
+  .loading-mascot-walker {
+    display: none;
+  }
+}
+
+@keyframes loading-tip-side-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes loading-tip-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Barra de progreso indeterminada (techo visual superior) ──
+   Línea azul de 3px que viaja de izquierda a derecha en loop infinito:
+   da un "techo" a la pantalla y refuerza que el sistema está trabajando. */
+.loading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 300;
+  overflow: hidden;
+  pointer-events: none;
+}
+.loading-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 35%;
+  background: var(--accent-primary);
+  box-shadow: 0 0 10px var(--accent-primary);
+  animation: loading-progress-indeterminate 1.3s ease-in-out infinite;
+}
+@keyframes loading-progress-indeterminate {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
+}
+
+/* Barra de progreso dentro del botón Descargar (mientras genera) */
+.toolbar-btn-progress {
+  animation: loading-progress-indeterminate 1s ease-in-out infinite;
+}
+
+/* ── Riel de etapas de carga (fullscreen): Analizar → Clasificar → Aplicar ── */
+.loading-stage-rail {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+.loading-stage-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.loading-stage-item.active {
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+.loading-stage-item.done {
+  color: var(--color-success);
+}
+.loading-stage-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+.loading-stage-item.active .loading-stage-dot {
+  border-color: var(--accent-primary);
+  background: rgba(79, 124, 255, 0.14);
+}
+.loading-stage-item.done .loading-stage-dot {
+  border-color: var(--color-success);
+  background: var(--color-success);
+  color: #fff;
+}
+.loading-stage-line {
+  width: 18px;
+  height: 1px;
+  background: var(--border-strong);
+  flex-shrink: 0;
+}
+
+/* ── Mascota: animaciones según la categoría de la frase ──
+   Cada tipo de mensaje tiene su propio movimiento, así la mascota
+   "reacciona" al contenido que está mostrando (ver ANIMATION_BY_CATEGORY). */
+.mascot-anim-process { animation: mascot-breathe 2.4s ease-in-out infinite; }
+@keyframes mascot-wiggle {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25% { transform: rotate(-5deg) translateY(-2px); }
+  75% { transform: rotate(5deg) translateY(-2px); }
+}
+.mascot-anim-jokes { animation: mascot-wiggle 2s ease-in-out infinite; }
+@keyframes mascot-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.mascot-anim-apa { animation: mascot-bob 2.6s ease-in-out infinite; }
+@keyframes mascot-sway {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  50% { transform: rotate(-5deg) translateY(-2px); }
+}
+.mascot-anim-honest { animation: mascot-sway 3.2s ease-in-out infinite; }
+@keyframes mascot-spark {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.1) rotate(-6deg); }
+  75% { transform: scale(0.94) rotate(6deg); }
+}
+.mascot-anim-llm { animation: mascot-spark 1.7s ease-in-out infinite; }
+@keyframes mascot-scan {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-3px) rotate(-2deg); }
+  66% { transform: translateY(-1px) rotate(2deg); }
+}
+.mascot-anim-ai { animation: mascot-scan 2.2s ease-in-out infinite; }
+@keyframes mascot-fight {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(-4px) rotate(-3deg); }
+  75% { transform: translateX(4px) rotate(3deg); }
+}
+.mascot-anim-wordhell { animation: mascot-fight 1.9s ease-in-out infinite; }
+@keyframes mascot-sleep {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(2px) scale(0.98); }
+}
+.mascot-anim-student { animation: mascot-sleep 2.8s ease-in-out infinite; }
+
+/* ════════════ COMENTARIO ROTATIVO (status bar y otros lugares) ════════════ */
+.rotating-comment {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  font-weight: 600;
+  font-style: normal;
+  color: var(--text-main);
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  padding: 3px 12px;
+  animation: loading-tip-in 0.4s ease-out both;
+}
+.rotating-comment-marker {
+  font-style: normal;
+  font-size: 11px;
+  opacity: 0.9;
+}
+.rotating-comment-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ════════════ MICRO-ANIMACIÓN DE CIERRE (descarga exitosa) ════════════ */
+.export-view-panel {
+  animation: export-view-in 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.export-file-identity {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  box-sizing: border-box;
+  color: var(--accent-primary);
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+.export-file-identity > div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 2px;
+}
+.export-file-identity strong,
+.export-file-identity span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.export-file-identity strong {
+  color: var(--text-main);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+.export-file-identity span {
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+}
+.export-downloaded-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  color: var(--text-secondary);
+  font-size: var(--text-xs);
+}
+.export-downloaded-actions > div {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.export-downloaded-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 9px;
+  color: var(--text-main);
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font: inherit;
+}
+.export-downloaded-actions button:hover {
+  /* Era `var(--surface-hover)`, un token que ningún `:root` declara: en claro y
+     en oscuro esa caja no tenía fondo. El hover de una superficie ya tiene
+     nombre y tema --`--color-bg-surface-hover`--, que es lo que usan los
+     botones del resto de la app, así que no hace falta un alias nuevo. */
+  background: var(--color-bg-surface-hover);
+}
+
+@keyframes export-view-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.export-companion-stage {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  padding: 48px;
+  box-sizing: border-box;
+  color: var(--text-main);
+  overflow: hidden;
+  animation: export-companion-in 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+}
+.export-companion-art {
+  position: relative;
+  width: min(340px, 58vw);
+  height: 220px;
+}
+.export-companion-paper {
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  width: 156px;
+  height: 194px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 24px 20px;
+  box-sizing: border-box;
+  color: var(--accent-primary);
+  background: var(--paper-white);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-lg);
+  transform: rotate(5deg) translateX(-20px);
+  animation: export-paper-float 5s ease-in-out infinite;
+}
+.export-companion-paper span {
+  display: block;
+  height: 5px;
+  width: 100%;
+  border-radius: var(--radius-full);
+  background: var(--border-subtle);
+}
+.export-companion-paper span:nth-of-type(2) { width: 78%; }
+.export-companion-paper span:nth-of-type(3) { width: 88%; }
+.export-companion-mascot {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(28px) rotate(-4deg);
+  filter: drop-shadow(0 10px 14px var(--color-border-subtle));
+  animation: export-mascot-wave 3.6s ease-in-out infinite;
+}
+.export-companion-copy {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 360px;
+  text-align: center;
+}
+.export-companion-kicker {
+  color: var(--accent-primary);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+.export-companion-copy h2 {
+  margin: 0;
+  color: var(--text-main);
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 750;
+  line-height: 1.15;
+}
+.export-companion-copy p {
+  max-width: 34ch;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-base);
+  line-height: 1.5;
+}
+.export-companion-copy button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 8px;
+  padding: 8px 12px;
+  color: var(--accent-primary);
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+}
+.export-companion-copy button:hover {
+  background: var(--color-accent-soft);
+  transform: translateY(-1px);
+}
+@keyframes export-companion-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes export-paper-float {
+  0%, 100% { transform: rotate(5deg) translateX(-20px) translateY(0); }
+  50% { transform: rotate(3deg) translateX(-20px) translateY(-6px); }
+}
+@keyframes export-mascot-wave {
+  0%, 100% { transform: translateX(28px) rotate(-4deg); }
+  50% { transform: translateX(28px) rotate(3deg) translateY(-5px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .export-view-panel,
+  .export-companion-stage,
+  .export-companion-paper,
+  .export-companion-mascot {
+    animation: none;
+  }
+}
+
+.download-success {
+  position: fixed;
+  left: 24px;
+  bottom: 96px;
+  transform: none;
+  z-index: 95;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  background: var(--surface-elevated);
+  border: 1px solid rgba(45, 106, 79, 0.35);
+  border-radius: 14px;
+  padding: 12px 18px;
+  box-shadow: var(--shadow-lg);
+  animation: download-success-in 0.25s ease-out both;
+}
+.download-success-icon {
+  animation: download-success-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+.download-success-ring {
+  stroke: var(--color-success);
+  stroke-width: 2.5;
+  fill: rgba(45, 106, 79, 0.1);
+  stroke-dasharray: 96;
+  stroke-dashoffset: 96;
+  animation: download-success-draw 0.4s ease-out 0.1s forwards;
+}
+.download-success-check {
+  stroke: var(--color-success);
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: download-success-draw 0.3s ease-out 0.45s forwards;
+}
+.download-success-text {
+  font-family: 'Baloo 2', 'Comic Neue', 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+@keyframes download-success-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes download-success-bounce {
+  0% { transform: scale(0.4); }
+  55% { transform: scale(1.15); }
+  75% { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+@keyframes download-success-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes wa-pop {
+  0% { opacity: 0; transform: scale(0.5) translateY(14px); }
+  60% { opacity: 1; transform: scale(1.08) translateY(-3px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes wa-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes wa-blink {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  30% { transform: scale(1.25) rotate(-8deg); }
+  60% { transform: scale(0.95) rotate(6deg); }
+}
+
+/* ════════════ RESPONSIVE: barra de pestañas del asistente ════════════ */
+/* En ventanas angostas los labels colapsan a iconos para que no se superpongan
+   con los botones de acción (evita la "lista duplicada" al escalar). */
+@media (max-width: 1200px) {
+  .wizard-tab-label { display: none; }
+}
+@media (min-width: 1201px) {
+  .wizard-tab-label { display: inline; }
+}
+
+/* ════════════ HERO DE LA PANTALLA DE INICIO ════════════ */
+.hero-mascot-breathe {
+  animation: mascot-breathe 3s ease-in-out infinite;
+}
+.hero-phrase-in {
+  animation: hero-phrase-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── MASCOTA VIVA (el "libro" respira, se mece y parpadea) ──
+   Combate la "falsa muerte": el cerebro asocia el movimiento fluido con que
+   el programa sigue vivo. Parpadeo cada ~4.6s + balanceo/rebote suave. */
+@keyframes doc-mascot-blink {
+  0%, 91%, 100% { transform: scaleY(1); }
+  94%, 97% { transform: scaleY(0.08); }
+}
+.doc-mascot-eye {
+  animation: doc-mascot-blink 4.6s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+@keyframes doc-mascot-alive {
+  0%, 100% { transform: translateY(0) scale(1) rotate(0deg); }
+  50% { transform: translateY(-4px) scale(1.02) rotate(-1deg); }
+}
+.doc-mascot-alive {
+  animation: doc-mascot-alive 3s ease-in-out infinite;
+}
+@keyframes hero-phrase-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ════════════ MENÚ "CONFIGURACIONES" (estilo Notion) ════════════ */
+.settings-menu-pop {
+  animation: settings-menu-pop 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes settings-menu-pop {
+  from { opacity: 0; transform: translateY(6px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.settings-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border: none;
+  background: transparent;
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+.settings-menu-item:hover {
+  background: var(--surface-subtle);
+}
+.settings-menu-item:hover .settings-menu-chevron {
+  opacity: 1;
+}
+.settings-menu-chevron {
+  opacity: 0;
+  margin-left: auto;
+  transition: opacity 0.12s ease;
+}
+
+/* (Aquí vivían `.step-rail-*` y `.toolbar-btn-label`, el modo compacto de
+   StepRail. StepRail ya no existe y el rail nuevo es `IconRail`, de 56px fijos
+   sin etiquetas: sus estilos van inline. Ninguna de esas reglas tiene usuario. */
+
+/* ════════════ HERO: animación del badge ════════════ */
+@keyframes hero-badge-bounce {
+  0% { transform: translateX(-50%) scale(0); }
+  60% { transform: translateX(-50%) scale(1.15); }
+  85% { transform: translateX(-50%) scale(0.94); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+
+/* ════════════ SCROLLBAR SIEMPRE VISIBLE (preview PaperCanvas) ════════════
+   Thumb neutral 40% (hover 60%), track transparente, ancho 12px. */
+.paper-canvas-scroll {
+  scrollbar-width: auto;
+  scrollbar-color: var(--border-strong) transparent;
+}
+.paper-canvas-scroll::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+.paper-canvas-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.paper-canvas-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--border-strong);
+  background-color: color-mix(in srgb, var(--border-strong) 40%, transparent);
+  border-radius: 8px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+.paper-canvas-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in srgb, var(--border-strong) 60%, transparent);
+}
+
+/* ════════════ MICRO-ANIMACIONES FLUENT 2 ════════════ */
+@keyframes targetGlowFlash {
+  0% {
+    background-color: rgba(79, 124, 255, 0.28);
+    box-shadow: 0 0 0 4px rgba(79, 124, 255, 0.22);
+  }
+  60% {
+    background-color: rgba(79, 124, 255, 0.12);
+    box-shadow: 0 0 0 2px rgba(79, 124, 255, 0.10);
+  }
+  100% {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+
+.target-glow-flash {
+  animation: targetGlowFlash 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  border-radius: 4px;
+}
+
+@keyframes toastSlideUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 14px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+  }
+}
+
+.canvas-toast-enter {
+  animation: toastSlideUp 220ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pulseThinking {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+.ai-thinking-pulse {
+  animation: pulseThinking 1.4s ease-in-out infinite;
+}
+
+/* ════════════ COPILOT AI CHAT ANIMATIONS ════════════ */
+@keyframes chat-slide-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.chat-msg-in {
+  animation: chat-slide-in 0.22s ease-out both;
+}
+
+@keyframes typing-wave {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.5; }
+  40% { transform: translateY(-3px); opacity: 1; }
+}
+.typing-dot {
+  animation: typing-wave 1.2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+/* ════════════ CUSTOM PROPRIETARY LOADING EXPERIENCE ════════════ */
+.mascot-ambient-halo {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(79, 124, 255, 0.2) 0%, rgba(124, 58, 237, 0) 70%);
+  animation: pulse-dot 2.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes track-shimmer {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(120%); }
+  100% { transform: translateX(120%); }
+}
+
+.custom-loader-track {
+  position: relative;
+  overflow: hidden;
+  animation: custom-loader-pulse 2.2s ease-in-out infinite;
+}
+
+.custom-loader-track::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: track-shimmer 1.8s infinite;
+}
+
+@keyframes custom-loader-pulse {
+  0%, 100% { width: 35%; }
+  50% { width: 85%; }
+}
+
+.custom-stage-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface-elevated, #ffffff);
+  border: 1px solid var(--border-subtle, #e5e7eb);
+  border-radius: 16px;
+  padding: 8px 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.custom-stage-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.custom-stage-card.active {
+  background: rgba(79, 124, 255, 0.08);
+}
+
+.custom-stage-card.active .custom-stage-title {
+  color: var(--accent-primary, #4f7cff);
+  font-weight: 700;
+}
+
+.custom-stage-card.done .custom-stage-title {
+  color: var(--color-success);
+}
+
+.custom-stage-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-subtle, #f3f4f6);
+  color: var(--text-muted, #9ca3af);
+  flex-shrink: 0;
+}
+
+.custom-stage-card.active .custom-stage-icon {
+  background: var(--accent-primary, #4f7cff);
+  color: #ffffff;
+  box-shadow: 0 0 8px rgba(79, 124, 255, 0.4);
+}
+
+.custom-stage-card.done .custom-stage-icon {
+  background: var(--color-success);
+  color: #ffffff;
+}
+
+.custom-stage-title {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-main, #1a1a2e);
+  line-height: 1.2;
+}
+
+.custom-stage-sub {
+  font-size: 9.5px;
+  color: var(--text-secondary, #6b7280);
+  line-height: 1.2;
+}
+
+.custom-stage-connector {
+  width: 20px;
+  height: 2px;
+  background: var(--border-subtle, #e5e7eb);
+  border-radius: 1px;
+}
+
+.custom-stage-connector.active {
+  background: var(--color-success);
+}
+
+.custom-loading-card {
+  width: 100%;
+  background: var(--surface-elevated, #ffffff);
+  border: 1px solid var(--border-subtle, #e5e7eb);
+  border-radius: 18px;
+  padding: 18px 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* ════════════ HERO PHRASE CONTEXTUAL TYPOGRAPHIC ANIMATIONS ════════════ */
+@keyframes hero-fx-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-fx-ai-shimmer {
+  0%, 100% {
+    opacity: 0.95;
+    letter-spacing: -0.025em;
+  }
+  50% {
+    opacity: 1;
+    letter-spacing: -0.020em;
+    text-shadow: 0 0 12px rgba(79, 124, 255, 0.18);
+  }
+}
+
+@keyframes hero-fx-chiste-bounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.012);
+  }
+}
+
+@keyframes hero-fx-academic-breathe {
+  0%, 100% {
+    letter-spacing: -0.028em;
+  }
+  50% {
+    letter-spacing: -0.018em;
+  }
+}
+
+.hero-phrase-base {
+  animation: hero-fx-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
+}
+
+.hero-fx-editorial {
+  animation: hero-fx-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.hero-fx-ai {
+  animation: hero-fx-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both, hero-fx-ai-shimmer 4s ease-in-out infinite;
+}
+
+.hero-fx-chiste {
+  animation: hero-fx-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-fx-academic {
+  animation: hero-fx-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both, hero-fx-academic-breathe 6s ease-in-out infinite;
+}
+
+.hero-fx-punch {
+  animation: hero-fx-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-fx-clarity {
+  animation: hero-fx-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  text-shadow: 0 0 8px rgba(56, 160, 23, 0.12);
+}
+
+@keyframes ai-progress-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.change-mark-chip {
+  cursor: pointer;
+  transition: transform 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
+}
+
+.change-mark-chip:hover {
+  transform: translateY(-1px);
+  filter: brightness(0.97);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================================
+   RESPONSIVE MOBILE ADAPTATIONS (<= 768px)
+   Solo aplican en teléfonos/pantallas pequeñas. Cero impacto en PC.
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Lienzo y páginas de Word: permitir scroll suave horizontal sin desbordar el viewport */
+  .paper-canvas-container,
+  [data-testid="paper-canvas-container"] {
+    padding: var(--space-2) !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  /* Reducir márgenes externos de hojas en móvil */
+  .paper-page {
+    max-width: 100vw !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15) !important;
+    margin-bottom: var(--space-4) !important;
+  }
+
+  /* Barras superiores y toolbars: permitir flex-wrap para que los botones no se corten */
+  .unified-toolbar,
+  header {
+    flex-wrap: wrap !important;
+    gap: var(--space-2) !important;
+    padding: var(--space-2) var(--space-3) !important;
+    height: auto !important;
+  }
+
+  /* Workbench de Revisión: apilar columnas verticalmente */
+  .revision-workbench,
+  .review-layout-3col {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    overflow-y: auto !important;
+  }
+
+  /* Paneles laterales / Drawers: ancho completo en móvil */
+  .drawer-panel,
+  .sidebar-panel {
+    width: 100vw !important;
+    max-width: 100vw !important;
+  }
+
+  /* Modales y diálogos: ocupar el ancho seguro de pantalla */
+  .modal-content,
+  [role="dialog"] {
+    width: calc(100vw - 24px) !important;
+    max-width: 100% !important;
+    margin: 12px auto !important;
+  }
+
+  /* Carrusel de portadas: tarjetas adaptadas al ancho móvil */
+  .cover-carousel-card {
+    min-width: 80vw !important;
+  }
+}

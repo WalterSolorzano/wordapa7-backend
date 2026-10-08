@@ -1,0 +1,120 @@
+name: CI
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+jobs:
+  # ── LINT ──────────────────────────────────────────────────────────────────
+  lint-backend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0   # historial completo para diff de archivos cambiados
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+        cache: pip
+    - name: Install Ruff
+      run: pip install ruff
+    # Ratchet con baseline congelado: ruff SOLO sobre .py cambiados en este
+    # evento; falla solo si un (archivo, codigo) es nuevo o supera su conteo
+    # en ci/ruff-baseline.txt. La deuda legacy no bloquea; lo nuevo si.
+    - name: Run Ruff Linter (changed files, baseline gate)
+      env:
+        EVENT_BEFORE: ${{ github.event.before }}
+        PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+      run: |
+        set -euo pipefail
+        if [ -n "${PR_BASE_SHA:-}" ]; then
+          RANGE="$PR_BASE_SHA...HEAD"
+        elif [ -n "${EVENT_BEFORE:-}" ] && [[ "$EVENT_BEFORE" != 0000000000000000000000000000000000000000 ]]; then
+          RANGE="$EVENT_BEFORE...HEAD"
+        else
+          RANGE="HEAD~1...HEAD"
+        fi
+        git diff --name-only --diff-filter=ACMR "$RANGE" -- '*.py' > changed.txt || true
+        grep -E '^python/.*\.py$' changed.txt > lintable.txt || true
+        if [ ! -s lintable.txt ]; then
+          echo "Sin .py cambiados dentro de python/. Ruff omitido."
+          exit 0
+        fi
+        echo "Lint sobre archivos cambiados:"
+        cat lintable.txt
+        xargs -a lintable.txt ruff check --output-format concise > ruff_out.txt || true
+        cat ruff_out.txt
+        python ci/check_ruff_baseline.py ruff_out.txt
+
+  lint-frontend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: npm
+    - name: Install dependencies
+      run: npm ci
+    - name: Run ESLint
+      run: npm run lint
+
+  # ── TESTS ─────────────────────────────────────────────────────────────────
+  test-backend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+        cache: pip
+    - name: Install Python dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install pytest pytest-timeout
+    - name: Generate test corpus documents
+      run: cd python && python tests/generate_test_docs.py
+    - name: Run pytest
+      run: cd python && python -m pytest tests/ -v --tb=short --timeout=120 -p no:warnings
+      env:
+        PYTHONPATH: python
+
+  test-frontend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: npm
+    - name: Install dependencies
+      run: npm ci
+    - name: Run vitest
+      run: npx vitest run
+
+  # ── CORPUS REGRESSION ─────────────────────────────────────────────────────
+  corpus-regression:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+        cache: pip
+    - name: Install Python dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install pytest pytest-timeout
+    - name: Generate test corpus documents
+      run: cd python && python tests/generate_test_docs.py
+    - name: Run corpus regression tests
+      run: cd python && python -m pytest tests/test_corpus.py -v --tb=long --timeout=180 -p no:warnings
+      env:
+        PYTHONPATH: python

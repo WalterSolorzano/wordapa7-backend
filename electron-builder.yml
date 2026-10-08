@@ -1,0 +1,52 @@
+appId: com.wordapa7.app
+productName: WordAPA7
+disableSanityCheckAsar: true
+directories:
+  output: dist-electron-builder
+  buildResources: build
+files:
+  - dist/**/*
+  - dist-electron/**/*
+extraResources:
+  # ── Python embebido (reemplaza PyInstaller) ──────────────────────────
+  # El runtime de Python oficial viaja en resources/python-runtime/.
+  # Usa python.exe firmado por Python Software Foundation en lugar del
+  # exe de PyInstaller que Windows Defender flaggea como malware.
+  # NO se requieren exclusiones en el antivirus del usuario final.
+  - from: dist-python/python-runtime/
+    to: python-runtime/
+    filter:
+      - "**/*"
+  - from: word-addin/dist/
+    to: addin/
+    filter:
+      - "**/*"
+  - from: word-addin/manifest.xml
+    to: addin/manifest.xml
+compression: normal
+win:
+  target: nsis
+  icon: build/icon.ico
+  signtoolOptions: null
+nsis:
+  # ── Instalador Asistido con identidad visual propia (AGENTS.md) ─────────────
+  # oneClick: false habilita las páginas de bienvenida, instalación y cierre
+  # con bitmaps de marca (sidebar/header), colores y desinstalador visual.
+  oneClick: false
+  allowToChangeInstallationDirectory: false
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  perMachine: false
+  runAfterFinish: true
+  installerIcon: build/icon.ico
+  uninstallerIcon: build/icon.ico
+  installerHeaderIcon: build/icon.ico
+  installerHeader: build/installerHeader.bmp
+  installerSidebar: build/installerSidebar.bmp
+  uninstallerSidebar: build/uninstallerSidebar.bmp
+  include: build/installer.nsh
+publish:
+  provider: github
+  owner: WalterSolorzano
+  repo: ProyectoAPA7
+  releaseType: release

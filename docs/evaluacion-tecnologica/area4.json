@@ -1,0 +1,515 @@
+{
+  "integrity_corpus": [
+    {
+      "file": "_tmp_empty.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "7"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "floating_image.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "floating_image.rt.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "mixed.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "mixed.rt.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "mixed_locked_contentLocked.attacked.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "mixed_locked_contentLocked.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "mixed_locked_contentLocked.scoped_contentLocked.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "mixed_locked_sdtLocked.attacked.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "mixed_locked_sdtLocked.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "mixed_locked_sdtLocked.scoped_sdtLocked.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "plaintext.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "plaintext.rt.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "plaintext_locked_contentLocked.attacked.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "plaintext_locked_contentLocked.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "plaintext_locked_contentLocked.scoped_contentLocked.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "plaintext_locked_sdtLocked.attacked.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "plaintext_locked_sdtLocked.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "plaintext_locked_sdtLocked.scoped_sdtLocked.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "poc_hijack.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [
+        "1"
+      ],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": [
+        "bullet"
+      ]
+    },
+    {
+      "file": "poc_wingdings.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "7"
+      ],
+      "used_numids": [
+        "7"
+      ],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": [
+        "bullet"
+      ]
+    },
+    {
+      "file": "poc_wingdings_after.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "7"
+      ],
+      "used_numids": [
+        "7"
+      ],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": [
+        "bullet"
+      ]
+    },
+    {
+      "file": "table_logo.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "table_logo.rt.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "textbox_nested.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    },
+    {
+      "file": "textbox_nested.rt.docx",
+      "has_numbering_part": true,
+      "defined_nums": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "used_numids": [],
+      "missing_num_refs": [],
+      "missing_abstract": [],
+      "resolved_formats": []
+    }
+  ],
+  "poc_hijack": {
+    "file": "poc_hijack.docx",
+    "has_numbering_part": true,
+    "defined_nums": [
+      "1"
+    ],
+    "used_numids": [
+      "1"
+    ],
+    "missing_num_refs": [],
+    "missing_abstract": [],
+    "resolved_formats": [
+      "decimal"
+    ],
+    "pipeline_item_expected_fmt": "bullet",
+    "pipeline_item_actual_fmt": "decimal",
+    "misformat_confirmed": true
+  },
+  "poc_wingdings": {
+    "before_bullet_font": [
+      "Symbol",
+      "default"
+    ],
+    "after_bullet_font": [
+      "Symbol",
+      "default"
+    ],
+    "preserved": true
+  }
+}

@@ -1,0 +1,35 @@
+# ── Build context para el Dockerfile del Space ──
+# Copia solo lo necesario: python/ (con filtros), dist/ (frontend) y
+# los archivos de despliegue. El resto (repo, node_modules, etc.) queda fuera.
+
+# Excluir artefactos del repo
+.git
+.gitignore
+.github
+node_modules
+package.json
+package-lock.json
+*.md
+!README.md
+.venv
+venv
+__pycache__/
+*.pyc
+*.pyd
+.pytest_cache
+dist-electron
+dist-electron-builder
+dist-python
+storage/
+storage/**/*
+sessions/
+.env
+.env*.local
+*.docx
+!apa7_template.docx
+build/
+scratch/
+server_log.txt
+USER_FLOWS.md
+install.bat
+start.bat

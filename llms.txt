@@ -1,0 +1,22 @@
+# WordAPA7
+> Desktop-first web app (React + FastAPI) converting Microsoft Word .docx files to APA 7th edition standard.
+
+## Stack
+- Frontend: React 18, TypeScript, Vite 5, Zustand (`src/store/useDocStore.ts`), Lucide React icons (NO EMOJIS).
+- Backend: Python 3.11+, FastAPI (port 8742), python-docx, uvicorn.
+- Architecture: In-place XML manipulation (`generation/inplace_editor.py`), session persistence in `storage/sessions/{session_id}/`.
+
+## Core Guidelines
+- Design System: Strict CSS variables from `src/styles/design-tokens.md` (`var(--accent-primary)`, `var(--text-main)`, `var(--paper-white)`).
+- Zero Emojis: Strictly NO emojis in UI strings, toasts, logs, buttons, or generated content. Use Lucide icons.
+- Light Mode First: Refined academic aesthetic, crisp 2.54cm margins, 1.27cm indent, 2.0 double spacing.
+- Portada Protection: Original cover page is protected by default (`use_original_cover: true`).
+- LLM Router: Multi-provider fallback (Groq / Cerebras for <350ms fast tasks, NVIDIA NIM Llama-70B for heavy reasoning).
+
+## Key Files
+- `src/App.tsx`: Main application shell with step navigation and drawer overlays.
+- `src/store/useDocStore.ts`: Central state (DocumentModel, active step, actions).
+- `src/components/layout/PaperCanvas.tsx`: WYSIWYG APA 7 preview paper canvas.
+- `python/main.py`: REST API endpoints (`/api/upload`, `/api/generate`, `/api/ai/*`).
+- `python/generation/inplace_editor.py`: Default in-place DOCX formatting engine.
+- `python/modules/ai_client.py`: Multi-provider LLM rate limiter & executor.

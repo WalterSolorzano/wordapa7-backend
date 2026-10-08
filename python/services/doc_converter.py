@@ -1,4 +1,4 @@
-﻿import logging
+import logging
 import os
 import shutil
 import threading
@@ -46,9 +46,15 @@ class DocConverterService:
                 return "LO"
             raise RuntimeError("Se requiere LibreOffice")
 
-        # Default: COM es la única autoridad (D-a: sin degradación)
+        # Por defecto COM es la autoridad (desktop). En web/cloud (IS_WEB / WEB_ONLY) se permite LO o DOCX_ONLY
         if self._com_processor.is_available():
             return "COM"
+
+        is_web_env = os.getenv("IS_WEB", "false").lower() in ("true", "1") or os.getenv("WEB_ONLY", "false").lower() in ("true", "1")
+        if is_web_env:
+            if self._lo_service.is_available():
+                return "LO"
+            return "DOCX_ONLY"
 
         raise RuntimeError("Se requiere Microsoft Word")
 

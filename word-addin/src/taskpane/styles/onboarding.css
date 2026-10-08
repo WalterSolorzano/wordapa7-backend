@@ -1,0 +1,161 @@
+/**
+ * WordAPA7 Add-in — Estilos de Onboarding (Tour + Tip Boxes)
+ * ==========================================================
+ *
+ * Estilos para:
+ *   - WelcomeTour: overlay con spotlight, tooltip card, progress dots
+ *   - TipBox: cajas de ayuda contextual con icono SVG
+ *
+ * Usa las mismas variables CSS que taskpane.css (design tokens alineados).
+ */
+
+/* ── WELCOME TOUR ─────────────────────────────────────────────────────────── */
+
+.tour-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  animation: tour-fade-in 0.25s ease;
+}
+
+@keyframes tour-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Spotlight: se aplica al elemento destacado. La sombra gigante
+   crea el efecto de "recorte" alrededor del elemento. */
+.tour-spotlight {
+  position: relative !important;
+  z-index: 9999 !important;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55) !important;
+  border-radius: var(--radius-md) !important;
+  transition: box-shadow 0.3s ease, border-radius 0.3s ease;
+}
+
+/* Tooltip card: fijo abajo del task pane, nunca tapa el elemento destacado */
+.tour-tooltip {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  z-index: 10000;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-lg);
+  animation: tour-slide-up 0.3s ease;
+}
+
+@keyframes tour-slide-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Progress dots: el activo se ensancha como una pildora */
+.tour-tooltip__progress {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.tour-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border-default);
+  transition: all 0.2s;
+}
+
+.tour-dot--active {
+  width: 18px;
+  border-radius: 3px;
+  background: var(--accent-primary);
+}
+
+.tour-tooltip__text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.tour-tooltip__actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tour-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 14px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+
+.tour-btn--skip {
+  background: transparent;
+  color: var(--text-tertiary);
+}
+
+.tour-btn--skip:hover {
+  color: var(--text-primary);
+}
+
+.tour-btn--next {
+  background: var(--accent-primary);
+  color: var(--text-on-accent);
+}
+
+.tour-btn--next:hover {
+  background: var(--accent-primary-hover);
+}
+
+/* ── TIP BOX (empty states contextuales) ──────────────────────────────────── */
+
+.tip-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  padding: 8px 10px;
+  background: var(--accent-soft);
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.tip-box__icon {
+  color: var(--accent-primary);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.tip-box__text {
+  flex: 1;
+}
+
+/* ── DARK MODE ────────────────────────────────────────────────────────────── */
+
+@media (prefers-color-scheme: dark) {
+  .tour-tooltip {
+    background: var(--bg-elevated);
+  }
+  .tour-spotlight {
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.65) !important;
+  }
+  .tour-overlay {
+    background: rgba(0, 0, 0, 0.65);
+  }
+}

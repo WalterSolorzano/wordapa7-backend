@@ -1,0 +1,7 @@
+# WordAPA7 Cursor / AI Rules
+
+- Strictly NO EMOJIS in UI, strings, toasts, logs, or comments. Always use Lucide icons.
+- Strictly use CSS design tokens `var(--...)` from `src/styles/design-tokens.md`.
+- Prioritize Light Mode with clean paper canvas rendering (2.54cm margins, 1.27cm indent, 2.0 double spacing).
+- Never break `use_original_cover: true` in inplace editor.
+- Keep components minimal, performant, and clutter-free without noisy floating divs.

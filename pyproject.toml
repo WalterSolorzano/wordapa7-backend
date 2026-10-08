@@ -1,0 +1,87 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wordapa7"
+version = "0.1.0"
+description = "Motor APA 7: API de spec, presets y generacion de docx (WordAPA7)"
+readme = "README.md"
+requires-python = ">=3.10"
+# Espejo EXACTO de requirements.txt (el test de empaquetado exige igualdad;
+# cambiar una version implica tocar ambos archivos).
+dependencies = [
+    "fastapi>=0.141.1,<0.143",
+    "starlette>=0.46.0",
+    "uvicorn[standard]>=0.30.1",
+    "python-docx>=1.1.2",
+    "openpyxl>=3.1.0",
+    "lxml>=5.2.0",
+    "beautifulsoup4>=4.12.0",
+    "pillow>=10.4.0",
+    "python-multipart>=0.0.9",
+    "httpx>=0.27.0",
+    "openai>=1.35.0",
+    "pydantic>=2.7.4",
+    "pydantic-settings>=2.3.4",
+    "aiofiles>=23.2.1",
+    "python-dotenv>=1.0.1",
+    "psutil>=5.9.0",
+    'pywin32>=306; sys_platform == "win32"',
+    "networkx>=3.0",
+    "PyMuPDF>=1.24.0",
+    'docx2pdf>=0.0.1; sys_platform == "win32"',
+    "cryptography>=42.0.0",
+    "mcp>=1.2.0,<2",
+]
+
+[tool.setuptools]
+# Layout plano: los modulos sueltos viven en python/ (imports raiz intactos;
+# nada cambia en cómo se ejecuta hoy — solo habilita pip install -e .).
+package-dir = { "" = "python" }
+py-modules = [
+    "build_embedded",
+    "build_manifest",
+    "config",
+    "constants",
+    "core_server",
+    "create_template",
+    "embed_payload",
+    "embedded_secrets",
+    "key_loader",
+    "main",
+    "mcp_server",
+    "models",
+    "preset_store",
+    "profiles",
+    "runtime_flags",
+    "scratch_inspect",
+    "spec_dsl",
+    "spec_postpass",
+    "ssl_cert_gen",
+    "word_watcher",
+    "wordapa7_logger",
+]
+
+[tool.setuptools.packages.find]
+where = ["python"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+# E501: lineas largas toleradas (convencion del repo)
+# F841: variables asignadas por efecto/legibilidad (tests y prod)
+# E741: nombres ambiguos tipo `l` en codigo legacy
+# E701: one-liners compactos (estilo del repo)
+ignore = ["E501", "F841", "E741", "E701"]
+
+[tool.ruff.lint.per-file-ignores]
+# Imports lazy a mitad de archivo (arranque rapido del servidor):
+"python/main.py" = ["E402"]
+"python/modules/referencias_module.py" = ["E402"]
+
+[tool.ruff.format]
+quote-style = "double"

@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WordAPA7 — Inspiración UI: Revisión Focalizada & TopBar Gemini</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* DESIGN.md Tokens estrictos: interfaz blanca con acentos azul #4f7cff */
+    :root {
+      --primary: #4f7cff;
+      --primary-hover: #3b66e0;
+      --primary-soft: rgba(79, 124, 255, 0.08);
+      --canvas-bg: #f8f9fa;
+      --surface-bg: #ffffff;
+      --surface-alt: #f1f3f6;
+      --border-subtle: #e5e7eb;
+      --border-strong: #d1d5db;
+      --text-primary: #111827;
+      --text-secondary: #4b5563;
+      --text-tertiary: #9ca3af;
+
+      --danger: #dc2626;
+      --danger-soft: rgba(220, 38, 38, 0.08);
+      --success: #16a34a;
+
+      --font-ui: 'Inter', -apple-system, sans-serif;
+      --font-reading: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-ui);
+      background-color: var(--canvas-bg);
+      color: var(--text-primary);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── 1. TOPBAR REFINADA LIMPIA (ESTILO GEMINI) ── */
+    .topbar {
+      height: 48px;
+      background-color: var(--surface-bg);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .doc-title-input {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      color: var(--text-primary);
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 4px 8px;
+      outline: none;
+      width: 420px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: all 0.15s;
+    }
+    .doc-title-input:hover { border-color: var(--border-subtle); background: var(--surface-alt); }
+    .doc-title-input:focus { border-color: var(--primary); background: #ffffff; }
+    
+    .save-tag {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .save-tag svg { color: var(--success); }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .account-avatar-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* ── 2. LAYOUT MAIN ── */
+    .app-main {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* Sidebar Slim de 56px (Solo Iconos Limpios) */
+    .sidebar-slim {
+      width: 56px;
+      background-color: var(--surface-bg);
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 0;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .sidebar-icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.12s;
+    }
+    .sidebar-icon-btn:hover { background-color: var(--surface-alt); color: var(--text-primary); }
+    .sidebar-icon-btn.active {
+      background-color: var(--primary-soft);
+      color: var(--primary);
+    }
+    .icon-badge-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--primary);
+    }
+
+    /* ── 3. WORKBENCH DE REVISIÓN FOCALIZADA ── */
+    .workbench-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background-color: var(--canvas-bg);
+    }
+
+    /* Barra Superior: Filtros Dinámicos */
+    .review-nav-strip {
+      height: 44px;
+      background-color: var(--surface-bg);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      flex-shrink: 0;
+    }
+    .chips-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chip-item {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .chip-item:hover { background-color: var(--surface-alt); color: var(--text-primary); }
+    .chip-item.active {
+      background-color: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .chip-counter {
+      font-size: 10.5px;
+      font-weight: 700;
+      opacity: 0.85;
+    }
+
+    .nav-pager {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pager-text {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .btn-next-item {
+      background-color: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .btn-next-item:hover { background-color: var(--primary-hover); }
+
+    /* Cuerpo Dividido en 3: Minimapa | Fragmento Focalizado | Lotes */
+    .review-body-split {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 24px 1fr 400px;
+      gap: 20px;
+      padding: 20px 24px;
+      overflow: hidden;
+    }
+
+    /* Minimapa lateral de marcas por página */
+    .page-minimap-bar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      background: var(--surface-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 6px 0;
+      height: 100%;
+    }
+    .minimap-mark {
+      width: 12px;
+      height: 6px;
+      border-radius: 1px;
+      background: #e5e7eb;
+      cursor: pointer;
+    }
+    .minimap-mark.has-issue { background: var(--primary); }
+    .minimap-mark.current {
+      outline: 2px solid var(--primary);
+      background: #ffffff;
+    }
+
+    /* Tarjeta de Foco */
+    .focus-reading-card {
+      background: var(--surface-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 32px 40px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .card-context-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 11.5px;
+      color: var(--text-tertiary);
+    }
+    .reading-content {
+      font-family: var(--font-reading);
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text-primary);
+    }
+    .issue-highlight-text {
+      padding: 1px 4px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .hl-spelling {
+      background-color: var(--danger-soft);
+      border-bottom: 2px solid var(--danger);
+      color: var(--danger);
+      font-weight: 500;
+    }
+    .hl-style {
+      background-color: var(--primary-soft);
+      border-bottom: 2px solid var(--primary);
+      color: var(--primary);
+      font-weight: 500;
+    }
+    .hl-ai {
+      background-color: rgba(107, 114, 128, 0.1);
+      border-bottom: 2px dashed #6b7280;
+      color: var(--text-secondary);
+    }
+
+    /* Panel Derecho de Acciones Agrupadas */
+    .actions-rack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow-y: auto;
+    }
+    .action-group-box {
+      background: var(--surface-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+    .group-box-header {
+      padding: 10px 14px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .btn-accept-all {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-accept-all:hover { background: var(--primary-hover); }
+    .btn-mark-all {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+      padding: 4px 10px;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-mark-all:hover { background: #ffffff; color: var(--text-primary); }
+
+    .action-row-item {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      gap: 8px;
+    }
+    .action-row-item:last-child { border-bottom: none; }
+    .diff-display {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .diff-old { text-decoration: line-through; color: var(--text-tertiary); }
+    .diff-new { color: var(--primary); font-weight: 600; }
+    .diff-count { font-size: 10.5px; color: var(--text-tertiary); }
+    .btn-row-accept {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .btn-row-accept:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* ── 4. PANTALLA FINAL DE EXPORTACIÓN (COLUMNA ÚNICA A LA IZQUIERDA) ── */
+    .export-clean-view {
+      flex: 1;
+      display: none;
+      padding: 60px 48px;
+      background: var(--canvas-bg);
+      align-items: flex-start;
+      justify-content: flex-start;
+    }
+    .export-column-content {
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-align: left;
+    }
+    .export-h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .export-desc {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      max-width: 48ch;
+    }
+    .export-btns-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .btn-primary-export {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-primary-export:hover { background: var(--primary-hover); }
+    .btn-secondary-export {
+      background: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-subtle);
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .btn-secondary-export:hover { background: #ffffff; color: var(--text-primary); }
+  </style>
+</head>
+<body>
+
+  <!-- 1. TOPBAR REFINADA LIMPIA (ESTILO GEMINI) -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <input type="text" class="doc-title-input" value="Impacto del Uso de Plataformas Digitales en Educación Superior.docx" title="Editar nombre" />
+      <div class="save-tag">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        <span>Guardado</span>
+      </div>
+    </div>
+
+    <div class="topbar-right">
+      <button class="account-avatar-btn" title="Cuenta">W</button>
+    </div>
+  </header>
+
+  <!-- 2. LAYOUT MAIN -->
+  <div class="app-main">
+
+    <!-- SIDEBAR SLIM (56px solo iconos) -->
+    <nav class="sidebar-slim">
+      <button class="sidebar-icon-btn" title="Portada">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        </svg>
+      </button>
+
+      <button class="sidebar-icon-btn" title="Estructura">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="8" y1="6" x2="21" y2="6"></line>
+          <line x1="8" y1="12" x2="21" y2="12"></line>
+          <line x1="8" y1="18" x2="21" y2="18"></line>
+          <line x1="3" y1="6" x2="3.01" y2="6"></line>
+          <line x1="3" y1="12" x2="3.01" y2="12"></line>
+          <line x1="3" y1="18" x2="3.01" y2="18"></line>
+        </svg>
+      </button>
+
+      <button class="sidebar-icon-btn" title="Figuras & Tablas">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+          <circle cx="8.5" cy="8.5" r="1.5"></circle>
+          <polyline points="21 15 16 10 5 21"></polyline>
+        </svg>
+      </button>
+
+      <button class="sidebar-icon-btn" title="Referencias">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+        </svg>
+      </button>
+
+      <button id="btnStepReview" class="sidebar-icon-btn active" title="Revisión" onclick="showStep('review')">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        <span class="icon-badge-dot"></span>
+      </button>
+
+      <button id="btnStepExport" class="sidebar-icon-btn" title="Descargar" onclick="showStep('export')">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+      </button>
+    </nav>
+
+    <!-- 3. WORKBENCH CONTAINER -->
+    <main class="workbench-area">
+
+      <!-- VISTA 1: REVISIÓN FOCALIZADA -->
+      <div id="viewReview" style="flex: 1; display: flex; flex-direction: column; overflow: hidden;">
+        
+        <!-- Barra de Filtros Reactivos -->
+        <div class="review-nav-strip">
+          <div class="chips-group">
+            <button id="filterAll" class="chip-item active" onclick="applyFilter('all')">
+              <span>Todo</span>
+              <span class="chip-counter">102</span>
+            </button>
+            <button id="filterSpelling" class="chip-item" onclick="applyFilter('spelling')">
+              <span>Ortografía</span>
+              <span class="chip-counter">48</span>
+            </button>
+            <button id="filterBloom" class="chip-item" onclick="applyFilter('bloom')">
+              <span>Redacción & Bloom</span>
+              <span class="chip-counter">31</span>
+            </button>
+            <button id="filterAi" class="chip-item" onclick="applyFilter('ai')">
+              <span>Patrones IA</span>
+              <span class="chip-counter">14</span>
+            </button>
+            <button id="filterCitations" class="chip-item" onclick="applyFilter('citations')">
+              <span>Citas</span>
+              <span class="chip-counter">9</span>
+            </button>
+          </div>
+
+          <div class="nav-pager">
+            <span class="pager-text">Página 14 de 132</span>
+            <button class="btn-next-item">
+              <span>Siguiente</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Cuerpo Dividido en 3 -->
+        <div class="review-body-split">
+          <!-- 1. Minimapa Angosto -->
+          <div class="page-minimap-bar">
+            <div class="minimap-mark"></div>
+            <div class="minimap-mark has-issue"></div>
+            <div class="minimap-mark"></div>
+            <div class="minimap-mark has-issue"></div>
+            <div class="minimap-mark current" title="Página 14"></div>
+            <div class="minimap-mark has-issue"></div>
+            <div class="minimap-mark"></div>
+            <div class="minimap-mark has-issue"></div>
+            <div class="minimap-mark"></div>
+          </div>
+
+          <!-- 2. Área Focalizada con Tipografía Nítida -->
+          <div class="focus-reading-card">
+            <div class="card-context-header">
+              <span>2.1 PLANTEAMIENTO DE OBJETIVOS · PÁGINA 14</span>
+              <span>3 hallazgos en este bloque</span>
+            </div>
+
+            <p class="reading-content">
+              El objetivo general de este estudio es <span class="issue-highlight-text hl-style" title="Estilo: En objetivos APA 7 usar verbos en infinitivo según la Taxonomía de Bloom">analizando</span> el impacto de las redes sociales en la comunicación institucional de las organizaciones no gubernamentales, con la finalidad de proponer estrategias replicables. Los resultados obtenidos demuestran una correlación positiva entre el uso de canales digitales y el <span class="issue-highlight-text hl-spelling" title="Ortografía: alcanze -> alcance">alcanze</span> de las campañas de sensibilización, lo cual, <span class="issue-highlight-text hl-ai" title="Patrón sintético redundante">sin lugar a dudas, representa una oportunidad significativa e innegable</span> para optimizar la eficiencia comunicacional de manera integral y exhaustiva.
+            </p>
+          </div>
+
+          <!-- 3. Panel Derecho de Lotes con Correspondencia Total 1:1 -->
+          <div class="actions-rack">
+            <!-- Grupo 1: Ortografía (Aceptar todas) -->
+            <div id="cardGroupSpelling" class="action-group-box">
+              <div class="group-box-header">
+                <span>Ortografía (48 casos)</span>
+                <button class="btn-accept-all">Aceptar todas</button>
+              </div>
+
+              <div class="action-row-item">
+                <div class="diff-display">
+                  <span class="diff-old">"alcanze"</span>
+                  <span>→</span>
+                  <span class="diff-new">alcance</span>
+                  <span class="diff-count">×6 · pág. 3, 14, 22...</span>
+                </div>
+                <button class="btn-row-accept">Aceptar</button>
+              </div>
+
+              <div class="action-row-item">
+                <div class="diff-display">
+                  <span class="diff-old">"conclucion"</span>
+                  <span>→</span>
+                  <span class="diff-new">conclusión</span>
+                  <span class="diff-count">×3</span>
+                </div>
+                <button class="btn-row-accept">Aceptar</button>
+              </div>
+
+              <div class="action-row-item">
+                <div class="diff-display">
+                  <span class="diff-old">"através"</span>
+                  <span>→</span>
+                  <span class="diff-new">a través</span>
+                  <span class="diff-count">×5</span>
+                </div>
+                <button class="btn-row-accept">Aceptar</button>
+              </div>
+            </div>
+
+            <!-- Grupo 2: Bloom / Estilo (Aceptar todas) -->
+            <div id="cardGroupBloom" class="action-group-box">
+              <div class="group-box-header">
+                <span>Redacción & Bloom (31 casos)</span>
+                <button class="btn-accept-all">Aceptar todas</button>
+              </div>
+
+              <div class="action-row-item">
+                <div class="diff-display">
+                  <span class="diff-old">"analizando"</span>
+                  <span>→</span>
+                  <span class="diff-new">analizar</span>
+                  <span class="diff-count">Infinitivo (Bloom)</span>
+                </div>
+                <button class="btn-row-accept">Aceptar</button>
+              </div>
+            </div>
+
+            <!-- Grupo 3: Detección IA (Solo Marcar) -->
+            <div id="cardGroupAi" class="action-group-box">
+              <div class="group-box-header">
+                <span>Patrones IA (14 fragmentos)</span>
+                <button class="btn-mark-all">Marcar todos</button>
+              </div>
+
+              <div class="action-row-item">
+                <div style="font-size: 11.5px; color: var(--text-secondary); line-height: 1.4;">
+                  "sin lugar a dudas, representa..."
+                </div>
+                <button class="btn-row-accept">Revisar</button>
+              </div>
+            </div>
+
+            <!-- Grupo 4: Citas Cruzadas (Resolver) -->
+            <div id="cardGroupCitations" class="action-group-box">
+              <div class="group-box-header">
+                <span>Citas Fantasma & Huérfanas (9)</span>
+                <button class="btn-accept-all">Resolver Citas</button>
+              </div>
+
+              <div class="action-row-item">
+                <div style="font-size: 11.5px; color: var(--text-secondary); line-height: 1.4;">
+                  (García, 2021) sin entrada bibliográfica
+                </div>
+                <button class="btn-row-accept">Buscar Crossref</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VISTA 2: PANTALLA LIMPIA DE DESCARGA -->
+      <div id="viewExport" class="export-clean-view">
+        <div class="export-column-content">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+
+          <h1 class="export-h1">Documento listo</h1>
+
+          <p class="export-desc">
+            Tu trabajo cumple con el formato APA 7. Puedes descargarlo o convertir otro archivo.
+          </p>
+
+          <div class="export-btns-group">
+            <button class="btn-primary-export" onclick="alert('Descargando documento final...')">
+              Descargar documento
+            </button>
+            <button class="btn-secondary-export" onclick="showStep('review')">
+              Convertir otro
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    function showStep(step) {
+      const vReview = document.getElementById('viewReview');
+      const vExport = document.getElementById('viewExport');
+      const bReview = document.getElementById('btnStepReview');
+      const bExport = document.getElementById('btnStepExport');
+
+      if (step === 'review') {
+        vReview.style.display = 'flex';
+        vExport.style.display = 'none';
+        bReview.classList.add('active');
+        bExport.classList.remove('active');
+      } else {
+        vReview.style.display = 'none';
+        vExport.style.display = 'flex';
+        bExport.classList.add('active');
+        bReview.classList.remove('active');
+      }
+    }
+
+    function applyFilter(category) {
+      const allChips = document.querySelectorAll('.chip-item');
+      allChips.forEach(c => c.classList.remove('active'));
+
+      const gSpelling = document.getElementById('cardGroupSpelling');
+      const gBloom = document.getElementById('cardGroupBloom');
+      const gAi = document.getElementById('cardGroupAi');
+      const gCitations = document.getElementById('cardGroupCitations');
+
+      if (category === 'all') {
+        document.getElementById('filterAll').classList.add('active');
+        gSpelling.style.display = 'block';
+        gBloom.style.display = 'block';
+        gAi.style.display = 'block';
+        gCitations.style.display = 'block';
+      } else if (category === 'spelling') {
+        document.getElementById('filterSpelling').classList.add('active');
+        gSpelling.style.display = 'block';
+        gBloom.style.display = 'none';
+        gAi.style.display = 'none';
+        gCitations.style.display = 'none';
+      } else if (category === 'bloom') {
+        document.getElementById('filterBloom').classList.add('active');
+        gSpelling.style.display = 'none';
+        gBloom.style.display = 'block';
+        gAi.style.display = 'none';
+        gCitations.style.display = 'none';
+      } else if (category === 'ai') {
+        document.getElementById('filterAi').classList.add('active');
+        gSpelling.style.display = 'none';
+        gBloom.style.display = 'none';
+        gAi.style.display = 'block';
+        gCitations.style.display = 'none';
+      } else if (category === 'citations') {
+        document.getElementById('filterCitations').classList.add('active');
+        gSpelling.style.display = 'none';
+        gBloom.style.display = 'none';
+        gAi.style.display = 'none';
+        gCitations.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>

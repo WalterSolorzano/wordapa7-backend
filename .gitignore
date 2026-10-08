@@ -1,0 +1,149 @@
+# Node dependencies
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Python environment & cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+# Artefactos de pip install -e . / build (mejora #2)
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+ENV/
+env/
+
+# Environment files (MUST NOT BE UPLOADED)
+.env
+# .md (evitar ignorar docs del proyecto)
+.env*.local
+
+# Application local storage & session files
+storage/
+sessions/
+*.docx
+!apa7_template.docx
+*.docx.sha256
+
+# Generated obfuscated key payload for the installer (never commit user keys)
+python/_embedded_payload.json
+**/_embedded_payload.json
+
+# Editor files & OS metadata
+.vscode/
+.idea/
+.claude/
+.system_generated/
+thumbs.db
+.DS_Store
+*.log
+browser_screenshot.png
+page1_screenshot.png
+page2_screenshot.png
+page2_scroll_screenshot.png
+middle_scroll_screenshot.png
+
+# Build and Electron outputs
+dist-electron/
+dist-electron-builder/
+dist-python/
+dist-python.trash.*/
+electron-dist/
+electron-dist-pre/
+electron-fresh.zip
+build/*
+!build/pyinstaller.spec
+!build/installer.nsh
+!build/generate_installer_assets.py
+!build/icon.ico
+!build/installerHeader.bmp
+!build/installerSidebar.bmp
+!build/uninstallerSidebar.bmp
+*.exe
+
+# Alternate / experimental build configs (dev-only, not the canonical electron-builder.yml)
+electron-builder-build.yml
+
+# Agents and reports
+.agents/
+report-*.md
+qa_ui_audit_report.md
+app_logs.txt
+asar_contents.txt
+server_log.txt
+USER_FLOWS.md
+
+# Entrenamiento del clasificador y artefactos de análisis (no son producto)
+ENTRENAR/
+screenshots/
+capturas-stitch/
+analyze_doc.py
+check_headers.py
+check_landscape.py
+compare_v1_v3.py
+deep_analyze.py
+deep_analyze2.py
+deep_analyze_sessions.py
+deep_analyze_v3.py
+regenerate_and_check.py
+trainer.py
+upload_test.py
+
+# ── Archivos temporales de debug / build (no son producto) ───────────────────
+# Scripts de parche/depuración de un solo uso en la raíz del repo
+/_debug_fix.py
+/_fix_download.py
+/_fix_logo.py
+/_fix_mkdir.py
+/_patch_lifespan.py
+/_patch_main.py
+/_patch_main2.py
+/_patch_main_ts.py
+/_patch_main_watcher.py
+/_patch_python_manager.py
+/_probe_findtype.py
+/_verify3.py
+/_verify_logo_fix.py
+/_verify_ssl_ctypes.py
+# Scripts de debug dentro de python/
+python/_dump_section.py
+python/_test_logo.py
+python/_verify_ca_fix.py
+# Parches JS y scripts de análisis sueltos
+patch_paper.js
+patch_paper2.js
+fix_css.py
+test_flow.py
+# Salidas de texto de build / 7zip / eslint / pytest
+7za_*.txt
+build_*.txt
+/_eslint_out.txt
+/_pytest_out.txt
+/_pytest_err.txt
+/_vitest.log
+/_commit_msg.txt
+/_validate_nsh.cjs
+# Artefactos vacíos / de error
+/Editar
+word-addin/$null
+# Catálogo generado por auto-setup del Add-in (runtime, no fuente)
+catalog/
+.perch/
+*.html
+!inspiracion/**
+*.pdf
+python/test_estudio_diag.py
+
+
+# Workspace de subagent-driven-development (ledger, briefs, reports)
+.superpowers/
+
+# Capturas de tests de Electron: son artefactos, no codigo
+electron_test_screen*.png
+
+graphify-out/
+.vercel

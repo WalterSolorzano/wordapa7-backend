@@ -1,0 +1,38 @@
+{
+  "name": "wordapa7-addin",
+  "version": "1.0.69",
+  "description": "WordAPA7 — Word Add-in (Task Pane) para formato APA 7 en tiempo real",
+  "private": true,
+  "scripts": {
+    "dev": "vite --mode development",
+    "build": "tsc && vite build",
+    "build:addin": "tsc && vite build",
+    "validate": "office-addin-manifest validate manifest.xml",
+    "sideload": "office-addin-debugging start manifest.xml desktop --app word",
+    "stop": "office-addin-debugging stop manifest.xml desktop",
+    "icons": "python ../venv/Scripts/python.exe scripts/generate_icons.py",
+    "preview": "vite preview",
+    "lint": "eslint src/",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@fluentui/react-icons": "^2.0.245",
+    "@microsoft/office-js": "^1.1.0-custom.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^7.0.0",
+    "@testing-library/react": "^16.3.2",
+    "@types/office-js": "^1.0.606",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.3",
+    "@vitejs/plugin-react": "^4.3.0",
+    "jsdom": "^29.1.1",
+    "typescript": "^5.4.5",
+    "vite": "^5.3.1",
+    "vite-plugin-mkcert": "^1.17.6",
+    "vitest": "^3.2.4"
+  }
+}

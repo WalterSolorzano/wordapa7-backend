@@ -1,0 +1,196 @@
+{
+  "A_sdt_lock": [
+    {
+      "variant": "plaintext",
+      "lock": "sdtLocked",
+      "naive_edit_attempted": true,
+      "lock_stopped_us": false,
+      "pipeline_touched_sdt_zone": false
+    },
+    {
+      "variant": "plaintext",
+      "lock": "contentLocked",
+      "naive_edit_attempted": true,
+      "lock_stopped_us": false,
+      "pipeline_touched_sdt_zone": false
+    },
+    {
+      "variant": "mixed",
+      "lock": "sdtLocked",
+      "naive_edit_attempted": true,
+      "lock_stopped_us": false,
+      "pipeline_touched_sdt_zone": false
+    },
+    {
+      "variant": "mixed",
+      "lock": "contentLocked",
+      "naive_edit_attempted": true,
+      "lock_stopped_us": false,
+      "pipeline_touched_sdt_zone": false
+    }
+  ],
+  "B_roundtrip": [
+    {
+      "variant": "plaintext",
+      "ms": 218,
+      "zone_identical": true,
+      "zone_children_before": 6,
+      "zone_children_after": 6,
+      "diffs": [],
+      "total_before": 15,
+      "total_after": 17,
+      "summary": {
+        "scopes": [
+          "texto",
+          "tablas_imagenes"
+        ],
+        "cover_guard": {
+          "protected": 7,
+          "detected": true
+        },
+        "texto": true,
+        "tablas": 1,
+        "figuras": 1
+      }
+    },
+    {
+      "variant": "table_logo",
+      "ms": 26,
+      "zone_identical": true,
+      "zone_children_before": 3,
+      "zone_children_after": 3,
+      "diffs": [],
+      "total_before": 12,
+      "total_after": 14,
+      "summary": {
+        "scopes": [
+          "texto",
+          "tablas_imagenes"
+        ],
+        "cover_guard": {
+          "protected": 4,
+          "detected": true
+        },
+        "texto": true,
+        "tablas": 1,
+        "figuras": 1
+      }
+    },
+    {
+      "variant": "textbox_nested",
+      "ms": 31,
+      "zone_identical": true,
+      "zone_children_before": 2,
+      "zone_children_after": 2,
+      "diffs": [],
+      "total_before": 11,
+      "total_after": 13,
+      "summary": {
+        "scopes": [
+          "texto",
+          "tablas_imagenes"
+        ],
+        "cover_guard": {
+          "protected": 3,
+          "detected": true
+        },
+        "texto": true,
+        "tablas": 1,
+        "figuras": 1
+      }
+    },
+    {
+      "variant": "floating_image",
+      "ms": 25,
+      "zone_identical": true,
+      "zone_children_before": 3,
+      "zone_children_after": 3,
+      "diffs": [],
+      "total_before": 12,
+      "total_after": 14,
+      "summary": {
+        "scopes": [
+          "texto",
+          "tablas_imagenes"
+        ],
+        "cover_guard": {
+          "protected": 4,
+          "detected": true
+        },
+        "texto": true,
+        "tablas": 1,
+        "figuras": 1
+      }
+    },
+    {
+      "variant": "mixed",
+      "ms": 25,
+      "zone_identical": true,
+      "zone_children_before": 6,
+      "zone_children_after": 6,
+      "diffs": [],
+      "total_before": 15,
+      "total_after": 17,
+      "summary": {
+        "scopes": [
+          "texto",
+          "tablas_imagenes"
+        ],
+        "cover_guard": {
+          "protected": 7,
+          "detected": true
+        },
+        "texto": true,
+        "tablas": 1,
+        "figuras": 1
+      }
+    }
+  ],
+  "C_zones": [
+    {
+      "variant": "plaintext",
+      "ground_truth_cover_paras": 7,
+      "detected_inside_gt": 7,
+      "false_positives_after": 0,
+      "misses": 0,
+      "body_start_idx": 7,
+      "exact": true
+    },
+    {
+      "variant": "table_logo",
+      "ground_truth_cover_paras": 3,
+      "detected_inside_gt": 0,
+      "false_positives_after": 0,
+      "misses": 3,
+      "body_start_idx": 0,
+      "exact": false
+    },
+    {
+      "variant": "textbox_nested",
+      "ground_truth_cover_paras": 3,
+      "detected_inside_gt": 0,
+      "false_positives_after": 0,
+      "misses": 3,
+      "body_start_idx": 0,
+      "exact": false
+    },
+    {
+      "variant": "floating_image",
+      "ground_truth_cover_paras": 4,
+      "detected_inside_gt": 0,
+      "false_positives_after": 0,
+      "misses": 4,
+      "body_start_idx": 0,
+      "exact": false
+    },
+    {
+      "variant": "mixed",
+      "ground_truth_cover_paras": 6,
+      "detected_inside_gt": 6,
+      "false_positives_after": 0,
+      "misses": 0,
+      "body_start_idx": 6,
+      "exact": true
+    }
+  ]
+}

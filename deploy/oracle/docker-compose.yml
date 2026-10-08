@@ -1,0 +1,15 @@
+services:
+  wordapa7:
+    build: .
+    container_name: wordapa7
+    ports:
+      - "80:7860"
+    environment:
+      - WORDAPA7_STORAGE_DIR=/data
+      - PORT=7860
+    volumes:
+      - wordapa7-data:/data
+    restart: unless-stopped
+
+volumes:
+  wordapa7-data:

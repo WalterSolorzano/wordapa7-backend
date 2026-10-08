@@ -1,0 +1,281 @@
+{
+  "A_sdt_lock": [
+    {
+      "variant": "plaintext",
+      "lock": "sdtLocked",
+      "naive_edit_attempted": true,
+      "lock_stopped_us": false,
+      "pipeline_touched_sdt_zone": false
+    },
+    {
+      "variant": "plaintext",
+      "lock": "contentLocked",
+      "naive_edit_attempted": true,
+      "lock_stopped_us": false,
+      "pipeline_touched_sdt_zone": false
+    },
+    {
+      "variant": "mixed",
+      "lock": "sdtLocked",
+      "naive_edit_attempted": true,
+      "lock_stopped_us": false,
+      "pipeline_touched_sdt_zone": false
+    },
+    {
+      "variant": "mixed",
+      "lock": "contentLocked",
+      "naive_edit_attempted": true,
+      "lock_stopped_us": false,
+      "pipeline_touched_sdt_zone": false
+    }
+  ],
+  "B_roundtrip": [
+    {
+      "variant": "plaintext",
+      "ms": 205,
+      "zone_identical": false,
+      "zone_children_before": 6,
+      "zone_children_after": 6,
+      "diffs": [
+        {
+          "index": 0,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:t>UNIVERSIDAD NACIONAL</w:t></w:r",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:ind w:firstLine=\"720\"></w:ind><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:"
+        },
+        {
+          "index": 1,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:t>Facultad de Ingenieria</w:t></w",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:ind w:firstLine=\"720\"></w:ind><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:"
+        },
+        {
+          "index": 2,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:t>Proyecto de Estudio del Trabajo",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:ind w:firstLine=\"720\"></w:ind><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:"
+        },
+        {
+          "index": 3,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:t>Br. Autor Uno</w:t></w:r></w:p>",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:ind w:firstLine=\"720\"></w:ind><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:"
+        },
+        {
+          "index": 4,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:t>Carnet: 2022-0000X</w:t></w:r><",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:ind w:firstLine=\"720\"></w:ind><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:"
+        },
+        {
+          "index": 5,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:t>1 de enero de 2025</w:t></w:r><",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:ind w:firstLine=\"720\"></w:ind><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:"
+        }
+      ],
+      "total_before": 15,
+      "total_after": 17,
+      "summary": {
+        "scopes": [
+          "texto",
+          "tablas_imagenes"
+        ],
+        "texto": true,
+        "tablas": 1,
+        "figuras": 1
+      }
+    },
+    {
+      "variant": "table_logo",
+      "ms": 23,
+      "zone_identical": false,
+      "zone_children_before": 3,
+      "zone_children_after": 3,
+      "diffs": [
+        {
+          "index": 0,
+          "before_head": "<w:tbl xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:tblPr><w:tblW w:type=\"auto\" w:w=\"0\"></w:tblW><w:tblLook w:firstColumn=\"1\" w:fir",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"left\"></w:jc></w:pPr><w:r><w:rPr><w:b></w:b></w:rPr><w:t>Tabla 1"
+        },
+        {
+          "index": 1,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:t>Titulo centrado sobre tabla</w:",
+          "after_head": "<w:tbl xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:tblPr><w:tblW w:type=\"auto\" w:w=\"0\"></w:tblW><w:tblLook w:firstColumn=\"1\" w:fir"
+        },
+        {
+          "index": 2,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:t>Autor Principal</w:t></w:r></w:",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:ind w:firstLine=\"720\"></w:ind><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:"
+        }
+      ],
+      "total_before": 12,
+      "total_after": 15,
+      "summary": {
+        "scopes": [
+          "texto",
+          "tablas_imagenes"
+        ],
+        "texto": true,
+        "tablas": 2,
+        "figuras": 1
+      }
+    },
+    {
+      "variant": "textbox_nested",
+      "ms": 25,
+      "zone_identical": false,
+      "zone_children_before": 2,
+      "zone_children_after": 2,
+      "diffs": [
+        {
+          "index": 0,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><mc:AlternateContent xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibilit",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:ind w:firstLine=\"720\"></w:ind></w:pPr><mc:AlternateContent xmlns:mc=\"http:"
+        },
+        {
+          "index": 1,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:t>TITULO-TRAS-TEXTBOX</w:t></w:r>",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:rPr><w:b></w:b></w:rPr><w:t>Figur"
+        }
+      ],
+      "total_before": 11,
+      "total_after": 14,
+      "summary": {
+        "scopes": [
+          "texto",
+          "tablas_imagenes"
+        ],
+        "texto": true,
+        "tablas": 1,
+        "figuras": 2
+      }
+    },
+    {
+      "variant": "floating_image",
+      "ms": 25,
+      "zone_identical": false,
+      "zone_children_before": 3,
+      "zone_children_after": 3,
+      "diffs": [
+        {
+          "index": 0,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:r><w:drawing><wp:anchor xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/200",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:ind w:firstLine=\"720\"></w:ind></w:pPr><w:r><w:drawing><wp:anchor xmlns:wp="
+        },
+        {
+          "index": 1,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:t>PORTADA-CON-IMAGEN-FLOTANTE</w:",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:rPr><w:b></w:b></w:rPr><w:t>Figur"
+        },
+        {
+          "index": 2,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:t>Segundo Autor</w:t></w:r></w:p>",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:ind w:firstLine=\"720\"></w:ind><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:"
+        }
+      ],
+      "total_before": 12,
+      "total_after": 15,
+      "summary": {
+        "scopes": [
+          "texto",
+          "tablas_imagenes"
+        ],
+        "texto": true,
+        "tablas": 1,
+        "figuras": 2
+      }
+    },
+    {
+      "variant": "mixed",
+      "ms": 24,
+      "zone_identical": false,
+      "zone_children_before": 6,
+      "zone_children_after": 6,
+      "diffs": [
+        {
+          "index": 0,
+          "before_head": "<w:tbl xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:tblPr><w:tblW w:type=\"auto\" w:w=\"0\"></w:tblW><w:tblLook w:firstColumn=\"1\" w:fir",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"left\"></w:jc></w:pPr><w:r><w:rPr><w:b></w:b></w:rPr><w:t>Tabla 1"
+        },
+        {
+          "index": 1,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:t>Titulo centrado sobre tabla</w:",
+          "after_head": "<w:tbl xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:tblPr><w:tblW w:type=\"auto\" w:w=\"0\"></w:tblW><w:tblLook w:firstColumn=\"1\" w:fir"
+        },
+        {
+          "index": 2,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:t>Autor Principal</w:t></w:r></w:",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:ind w:firstLine=\"720\"></w:ind><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:"
+        },
+        {
+          "index": 3,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><mc:AlternateContent xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibilit",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:ind w:firstLine=\"720\"></w:ind><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:"
+        },
+        {
+          "index": 4,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:t>TITULO-TRAS-TEXTBOX</w:t></w:r>",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:ind w:firstLine=\"720\"></w:ind></w:pPr><mc:AlternateContent xmlns:mc=\"http:"
+        },
+        {
+          "index": 5,
+          "before_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:r><w:t>FECHA-MIXTA: 15 de marzo de 2025</w:t></w:r></w:p>",
+          "after_head": "<w:p xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"><w:pPr><w:jc w:val=\"center\"></w:jc></w:pPr><w:r><w:rPr><w:b></w:b></w:rPr><w:t>Figur"
+        }
+      ],
+      "total_before": 15,
+      "total_after": 19,
+      "summary": {
+        "scopes": [
+          "texto",
+          "tablas_imagenes"
+        ],
+        "texto": true,
+        "tablas": 2,
+        "figuras": 2
+      }
+    }
+  ],
+  "C_zones": [
+    {
+      "variant": "plaintext",
+      "ground_truth_cover_paras": 7,
+      "detected_inside_gt": 7,
+      "false_positives_after": 0,
+      "misses": 0,
+      "body_start_idx": 7,
+      "exact": true
+    },
+    {
+      "variant": "table_logo",
+      "ground_truth_cover_paras": 3,
+      "detected_inside_gt": 0,
+      "false_positives_after": 0,
+      "misses": 3,
+      "body_start_idx": 0,
+      "exact": false
+    },
+    {
+      "variant": "textbox_nested",
+      "ground_truth_cover_paras": 3,
+      "detected_inside_gt": 0,
+      "false_positives_after": 0,
+      "misses": 3,
+      "body_start_idx": 0,
+      "exact": false
+    },
+    {
+      "variant": "floating_image",
+      "ground_truth_cover_paras": 4,
+      "detected_inside_gt": 0,
+      "false_positives_after": 0,
+      "misses": 4,
+      "body_start_idx": 0,
+      "exact": false
+    },
+    {
+      "variant": "mixed",
+      "ground_truth_cover_paras": 6,
+      "detected_inside_gt": 6,
+      "false_positives_after": 0,
+      "misses": 0,
+      "body_start_idx": 6,
+      "exact": true
+    }
+  ]
+}

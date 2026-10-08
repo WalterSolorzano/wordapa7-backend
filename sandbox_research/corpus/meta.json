@@ -1,0 +1,27 @@
+{
+  "plaintext": {
+    "cover_children": 6,
+    "sentinel": "INICIO-DEL-CUERPO-SENTINEL",
+    "structures": "plaintext"
+  },
+  "table_logo": {
+    "cover_children": 3,
+    "sentinel": "INICIO-DEL-CUERPO-SENTINEL",
+    "structures": "table_logo"
+  },
+  "textbox_nested": {
+    "cover_children": 2,
+    "sentinel": "INICIO-DEL-CUERPO-SENTINEL",
+    "structures": "textbox_nested"
+  },
+  "floating_image": {
+    "cover_children": 3,
+    "sentinel": "INICIO-DEL-CUERPO-SENTINEL",
+    "structures": "floating_image"
+  },
+  "mixed": {
+    "cover_children": 6,
+    "sentinel": "INICIO-DEL-CUERPO-SENTINEL",
+    "structures": "mixed"
+  }
+}

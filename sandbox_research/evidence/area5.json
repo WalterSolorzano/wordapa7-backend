@@ -1,0 +1,324 @@
+{
+  "citeproc_py": {
+    "total": 15,
+    "exact_matches": 4,
+    "match_pct": 26.7,
+    "results": [
+      {
+        "id": "single_author_journal",
+        "desc": "Single author, journal article with DOI",
+        "csl_output": "Garcia, M. (2023). El impacto de la inteligencia artificial en la educacion. Revista De Educacion, 45(2), 112–130. https://doi.org/10.1234/ried.2023.001",
+        "expected": "Garcia, M. (2023). El impacto de la inteligencia artificial en la educacion. Revista de Educacion, 45(2), 112-130. https://doi.org/10.1234/ried.2023.001",
+        "exact_match": false
+      },
+      {
+        "id": "two_authors",
+        "desc": "Two authors, journal article",
+        "csl_output": "Lopez, C., & Martinez, A. (2021). Metodos cuantitativos en investigacion social. Revista De Ciencias Sociales, 30, 45–67. https://doi.org/10.5678/rcs.2021.002",
+        "expected": "Lopez, C., & Martinez, A. (2021). Metodos cuantitativos en investigacion social. Revista de Ciencias Sociales, 30, 45-67. https://doi.org/10.5678/rcs.2021.002",
+        "exact_match": false
+      },
+      {
+        "id": "three_authors",
+        "desc": "Three authors (APA 7: list all in refs)",
+        "csl_output": "Perez, J., Rodriguez, L., & Sanchez, D. (2020). Analisis de varianza en estudios longitudinales. Revista De Psicologia, 15(1), 23–41.",
+        "expected": "Perez, J., Rodriguez, L., & Sanchez, D. (2020). Analisis de varianza en estudios longitudinales. Revista de Psicologia, 15(1), 23-41.",
+        "exact_match": false
+      },
+      {
+        "id": "corporate_author",
+        "desc": "Corporate/organizational author",
+        "csl_output": "Organizacion Mundial de la Salud. (2022). Informe sobre la salud mental en el mundo. OMS.",
+        "expected": "Organizacion Mundial de la Salud. (2022). Informe sobre la salud mental en el mundo. OMS.",
+        "exact_match": true
+      },
+      {
+        "id": "no_date",
+        "desc": "No date (n.d.)",
+        "csl_output": "Smith, J. (n.d.). Teorias del aprendizaje. Editorial Academica.",
+        "expected": "Smith, J. (n.d.). Teorias del aprendizaje. Editorial Academica.",
+        "exact_match": true
+      },
+      {
+        "id": "same_year_a",
+        "desc": "Same author/year suffix a (APA 7 8.19)",
+        "csl_output": "Brown, R. (2019a). Estudio sobre motivacion I. Revista De Psicologia Aplicada, 10, 1–15.",
+        "expected": "Brown, R. (2019a). Estudio sobre motivacion I. Revista de Psicologia Aplicada, 10, 1-15.",
+        "exact_match": false
+      },
+      {
+        "id": "same_year_b",
+        "desc": "Same author/year suffix b (APA 7 8.19)",
+        "csl_output": "Brown, R. (2019b). Estudio sobre motivacion II. Revista De Psicologia Aplicada, 10, 16–30.",
+        "expected": "Brown, R. (2019b). Estudio sobre motivacion II. Revista de Psicologia Aplicada, 10, 16-30.",
+        "exact_match": false
+      },
+      {
+        "id": "book_edition",
+        "desc": "Book with edition (2nd ed.)",
+        "csl_output": "Niebel, B., & Freivalds, A. (1999). Ingenieria industrial: Metodos, estandares y diseno del trabajo (2nd ed.). Alfaomega.",
+        "expected": "Niebel, B., & Freivalds, A. (1999). Ingenieria industrial: Metodos, estandares y diseno del trabajo (2nd ed.). Alfaomega.",
+        "exact_match": true
+      },
+      {
+        "id": "web_page",
+        "desc": "Web page with retrieval date",
+        "csl_output": "Gomez, P. (2024, March 15). Guia de estilo APA 7. Sitio Web Academico. https://www.ejemplo.com/apa7",
+        "expected": "Gomez, P. (2024, 15 de marzo). Guia de estilo APA 7. Sitio web academico. https://www.ejemplo.com/apa7",
+        "exact_match": false
+      },
+      {
+        "id": "doi_elocator",
+        "desc": "Journal article with article number (eLocator)",
+        "csl_output": "Wilson, E., & Thompson, J. (2022). Machine learning approaches to climate modeling. Journal of Climate Research, Article e001234. https://doi.org/10.1000/jcr.2022.001234",
+        "expected": "Wilson, E., & Thompson, J. (2022). Machine learning approaches to climate modeling. Journal of Climate Research, Article e001234. https://doi.org/10.1000/jcr.2022.001234",
+        "exact_match": true
+      },
+      {
+        "id": "book_chapter",
+        "desc": "Book chapter with editors",
+        "csl_output": "Davis, S. (2018). Cognitive development in early childhood. In T. Miller (ed.), Handbook of developmental psychology (pp. 89–110). Academic Press.",
+        "expected": "Davis, S. (2018). Cognitive development in early childhood. In T. Miller (Ed.), Handbook of developmental psychology (pp. 89-110). Academic Press.",
+        "exact_match": false
+      },
+      {
+        "id": "thesis",
+        "desc": "Doctoral thesis",
+        "csl_output": "Ramirez, F. (2021). Optimizacion de procesos productivos en la industria manufacturera (Publication) [Tesis doctoral]. Universidad Nacional Autonoma de Nicaragua.",
+        "expected": "Ramirez, F. (2021). Optimizacion de procesos productivos en la industria manufacturera [Tesis doctoral, Universidad Nacional Autonoma de Nicaragua].",
+        "exact_match": false
+      },
+      {
+        "id": "translated",
+        "desc": "Translated work with original date",
+        "csl_output": "Freud, S. (2010). El yo y el ello. Editorial Homo Sapiens. (Original work published 1923)",
+        "expected": "Freud, S. (2010). El yo y el ello. Editorial Homo Sapiens. (Obra original publicada en 1923).",
+        "exact_match": false
+      },
+      {
+        "id": "six_authors",
+        "desc": "Six authors (APA 7: list all up to 20)",
+        "csl_output": "Anderson, A., Brown, B., Clark, C., Davis, D., Evans, E., & Foster, F. (2023). Collaborative research in multidisciplinary teams. International Journal of Collaboration, 5, 100–120.",
+        "expected": "Anderson, A., Brown, B., Clark, C., Davis, D., Evans, E., & Foster, F. (2023). Collaborative research in multidisciplinary teams. International Journal of Collaboration, 5, 100-120.",
+        "exact_match": false
+      },
+      {
+        "id": "newspaper",
+        "desc": "Newspaper article with full date",
+        "csl_output": "Torres, L. (2024, January 20). El futuro de la educacion a distancia. El Diario Nacional, A1, A4.",
+        "expected": "Torres, L. (2024, 20 de enero). El futuro de la educacion a distancia. El Diario Nacional, pp. A1, A4.",
+        "exact_match": false
+      }
+    ]
+  },
+  "custom_parser": {
+    "total": 15,
+    "raw_passthrough_matches": 14,
+    "raw_match_pct": 93.3,
+    "field_extraction_correct": 12,
+    "field_extraction_pct": 80.0,
+    "results": [
+      {
+        "id": "single_author_journal",
+        "desc": "Single author, journal article with DOI",
+        "raw_input": "Garcia, M. (2023). El impacto de la inteligencia artificial en la educacion. Revista de Educacion, 45(2), 112-130. https://doi.org/10.1234/ried.2023.001",
+        "parsed_authors": [
+          "Garcia, M"
+        ],
+        "parsed_year": "2023",
+        "parsed_title": "El impacto de la inteligencia artificial en la educacion",
+        "output": "Garcia, M. (2023). El impacto de la inteligencia artificial en la educacion. Revista de Educacion, 45(2), 112-130. https://doi.org/10.1234/ried.2023.001",
+        "expected": "Garcia, M. (2023). El impacto de la inteligencia artificial en la educacion. Revista de Educacion, 45(2), 112-130. https://doi.org/10.1234/ried.2023.001",
+        "exact_match": true
+      },
+      {
+        "id": "two_authors",
+        "desc": "Two authors, journal article",
+        "raw_input": "Lopez, C., & Martinez, A. (2021). Metodos cuantitativos en investigacion social. Revista de Ciencias Sociales, 30, 45-67. https://doi.org/10.5678/rcs.2021.002",
+        "parsed_authors": [
+          "Lopez, C.",
+          "Martinez, A"
+        ],
+        "parsed_year": "2021",
+        "parsed_title": "Metodos cuantitativos en investigacion social",
+        "output": "Lopez, C., & Martinez, A. (2021). Metodos cuantitativos en investigacion social. Revista de Ciencias Sociales, 30, 45-67. https://doi.org/10.5678/rcs.2021.002",
+        "expected": "Lopez, C., & Martinez, A. (2021). Metodos cuantitativos en investigacion social. Revista de Ciencias Sociales, 30, 45-67. https://doi.org/10.5678/rcs.2021.002",
+        "exact_match": true
+      },
+      {
+        "id": "three_authors",
+        "desc": "Three authors (APA 7: list all in refs)",
+        "raw_input": "Perez, J., Rodriguez, L., & Sanchez, D. (2020). Analisis de varianza en estudios longitudinales. Revista de Psicologia, 15(1), 23-41.",
+        "parsed_authors": [
+          "Perez, J.",
+          "Rodriguez, L.",
+          "Sanchez, D"
+        ],
+        "parsed_year": "2020",
+        "parsed_title": "Analisis de varianza en estudios longitudinales",
+        "output": "Perez, J., Rodriguez, L., & Sanchez, D. (2020). Analisis de varianza en estudios longitudinales. Revista de Psicologia, 15(1), 23-41.",
+        "expected": "Perez, J., Rodriguez, L., & Sanchez, D. (2020). Analisis de varianza en estudios longitudinales. Revista de Psicologia, 15(1), 23-41.",
+        "exact_match": true
+      },
+      {
+        "id": "corporate_author",
+        "desc": "Corporate/organizational author",
+        "raw_input": "Organizacion Mundial de la Salud. (2022). Informe sobre la salud mental en el mundo. OMS.",
+        "parsed_authors": [
+          "Organizacion Mundial de la Salud"
+        ],
+        "parsed_year": "2022",
+        "parsed_title": "Informe sobre la salud mental en el mundo",
+        "output": "Organizacion Mundial de la Salud. (2022). Informe sobre la salud mental en el mundo. OMS.",
+        "expected": "Organizacion Mundial de la Salud. (2022). Informe sobre la salud mental en el mundo. OMS.",
+        "exact_match": true
+      },
+      {
+        "id": "no_date",
+        "desc": "No date (n.d.)",
+        "raw_input": "Smith, J. (s.f.). Teorias del aprendizaje. Editorial Academica.",
+        "parsed_authors": [],
+        "parsed_year": null,
+        "parsed_title": "Smith, J",
+        "output": "Smith, J. (s.f.). Teorias del aprendizaje. Editorial Academica.",
+        "expected": "Smith, J. (n.d.). Teorias del aprendizaje. Editorial Academica.",
+        "exact_match": false
+      },
+      {
+        "id": "same_year_a",
+        "desc": "Same author/year suffix a (APA 7 8.19)",
+        "raw_input": "Brown, R. (2019a). Estudio sobre motivacion I. Revista de Psicologia Aplicada, 10, 1-15.",
+        "parsed_authors": [],
+        "parsed_year": null,
+        "parsed_title": "Brown, R",
+        "output": "Brown, R. (2019a). Estudio sobre motivacion I. Revista de Psicologia Aplicada, 10, 1-15.",
+        "expected": "Brown, R. (2019a). Estudio sobre motivacion I. Revista de Psicologia Aplicada, 10, 1-15.",
+        "exact_match": true
+      },
+      {
+        "id": "same_year_b",
+        "desc": "Same author/year suffix b (APA 7 8.19)",
+        "raw_input": "Brown, R. (2019b). Estudio sobre motivacion II. Revista de Psicologia Aplicada, 10, 16-30.",
+        "parsed_authors": [],
+        "parsed_year": null,
+        "parsed_title": "Brown, R",
+        "output": "Brown, R. (2019b). Estudio sobre motivacion II. Revista de Psicologia Aplicada, 10, 16-30.",
+        "expected": "Brown, R. (2019b). Estudio sobre motivacion II. Revista de Psicologia Aplicada, 10, 16-30.",
+        "exact_match": true
+      },
+      {
+        "id": "book_edition",
+        "desc": "Book with edition (2nd ed.)",
+        "raw_input": "Niebel, B., & Freivalds, A. (1999). Ingenieria industrial: Metodos, estandares y diseno del trabajo (2nd ed.). Alfaomega.",
+        "parsed_authors": [
+          "Niebel, B.",
+          "Freivalds, A"
+        ],
+        "parsed_year": "1999",
+        "parsed_title": "Ingenieria industrial: Metodos, estandares y diseno del trabajo (2nd ed.)",
+        "output": "Niebel, B., & Freivalds, A. (1999). Ingenieria industrial: Metodos, estandares y diseno del trabajo (2nd ed.). Alfaomega.",
+        "expected": "Niebel, B., & Freivalds, A. (1999). Ingenieria industrial: Metodos, estandares y diseno del trabajo (2nd ed.). Alfaomega.",
+        "exact_match": true
+      },
+      {
+        "id": "web_page",
+        "desc": "Web page with retrieval date",
+        "raw_input": "Gomez, P. (2024, 15 de marzo). Guia de estilo APA 7. Sitio web academico. https://www.ejemplo.com/apa7",
+        "parsed_authors": [
+          "Gomez",
+          "P. ("
+        ],
+        "parsed_year": "2024",
+        "parsed_title": "15 de marzo)",
+        "output": "Gomez, P. (2024, 15 de marzo). Guia de estilo APA 7. Sitio web academico. https://www.ejemplo.com/apa7",
+        "expected": "Gomez, P. (2024, 15 de marzo). Guia de estilo APA 7. Sitio web academico. https://www.ejemplo.com/apa7",
+        "exact_match": true
+      },
+      {
+        "id": "doi_elocator",
+        "desc": "Journal article with article number (eLocator)",
+        "raw_input": "Wilson, E., & Thompson, J. (2022). Machine learning approaches to climate modeling. Journal of Climate Research, Article e001234. https://doi.org/10.1000/jcr.2022.001234",
+        "parsed_authors": [
+          "Wilson, E.",
+          "Thompson, J"
+        ],
+        "parsed_year": "2022",
+        "parsed_title": "Machine learning approaches to climate modeling",
+        "output": "Wilson, E., & Thompson, J. (2022). Machine learning approaches to climate modeling. Journal of Climate Research, Article e001234. https://doi.org/10.1000/jcr.2022.001234",
+        "expected": "Wilson, E., & Thompson, J. (2022). Machine learning approaches to climate modeling. Journal of Climate Research, Article e001234. https://doi.org/10.1000/jcr.2022.001234",
+        "exact_match": true
+      },
+      {
+        "id": "book_chapter",
+        "desc": "Book chapter with editors",
+        "raw_input": "Davis, S. (2018). Cognitive development in early childhood. In T. Miller (Ed.), Handbook of developmental psychology (pp. 89-110). Academic Press.",
+        "parsed_authors": [
+          "Davis, S"
+        ],
+        "parsed_year": "2018",
+        "parsed_title": "Cognitive development in early childhood",
+        "output": "Davis, S. (2018). Cognitive development in early childhood. In T. Miller (Ed.), Handbook of developmental psychology (pp. 89-110). Academic Press.",
+        "expected": "Davis, S. (2018). Cognitive development in early childhood. In T. Miller (Ed.), Handbook of developmental psychology (pp. 89-110). Academic Press.",
+        "exact_match": true
+      },
+      {
+        "id": "thesis",
+        "desc": "Doctoral thesis",
+        "raw_input": "Ramirez, F. (2021). Optimizacion de procesos productivos en la industria manufacturera [Tesis doctoral, Universidad Nacional Autonoma de Nicaragua].",
+        "parsed_authors": [
+          "Ramirez, F"
+        ],
+        "parsed_year": "2021",
+        "parsed_title": "Optimizacion de procesos productivos en la industria manufacturera [Tesis doctor",
+        "output": "Ramirez, F. (2021). Optimizacion de procesos productivos en la industria manufacturera [Tesis doctoral, Universidad Nacional Autonoma de Nicaragua].",
+        "expected": "Ramirez, F. (2021). Optimizacion de procesos productivos en la industria manufacturera [Tesis doctoral, Universidad Nacional Autonoma de Nicaragua].",
+        "exact_match": true
+      },
+      {
+        "id": "translated",
+        "desc": "Translated work with original date",
+        "raw_input": "Freud, S. (2010). El yo y el ello. Editorial Homo Sapiens. (Obra original publicada en 1923).",
+        "parsed_authors": [
+          "Freud, S"
+        ],
+        "parsed_year": "2010",
+        "parsed_title": "El yo y el ello",
+        "output": "Freud, S. (2010). El yo y el ello. Editorial Homo Sapiens. (Obra original publicada en 1923).",
+        "expected": "Freud, S. (2010). El yo y el ello. Editorial Homo Sapiens. (Obra original publicada en 1923).",
+        "exact_match": true
+      },
+      {
+        "id": "six_authors",
+        "desc": "Six authors (APA 7: list all up to 20)",
+        "raw_input": "Anderson, A., Brown, B., Clark, C., Davis, D., Evans, E., & Foster, F. (2023). Collaborative research in multidisciplinary teams. International Journal of Collaboration, 5, 100-120.",
+        "parsed_authors": [
+          "Anderson, A.",
+          "Brown, B.",
+          "Clark, C.",
+          "Davis, D.",
+          "Evans, E.",
+          "Foster, F"
+        ],
+        "parsed_year": "2023",
+        "parsed_title": "Collaborative research in multidisciplinary teams",
+        "output": "Anderson, A., Brown, B., Clark, C., Davis, D., Evans, E., & Foster, F. (2023). Collaborative research in multidisciplinary teams. International Journal of Collaboration, 5, 100-120.",
+        "expected": "Anderson, A., Brown, B., Clark, C., Davis, D., Evans, E., & Foster, F. (2023). Collaborative research in multidisciplinary teams. International Journal of Collaboration, 5, 100-120.",
+        "exact_match": true
+      },
+      {
+        "id": "newspaper",
+        "desc": "Newspaper article with full date",
+        "raw_input": "Torres, L. (2024, 20 de enero). El futuro de la educacion a distancia. El Diario Nacional, pp. A1, A4.",
+        "parsed_authors": [
+          "Torres",
+          "L. ("
+        ],
+        "parsed_year": "2024",
+        "parsed_title": "20 de enero)",
+        "output": "Torres, L. (2024, 20 de enero). El futuro de la educacion a distancia. El Diario Nacional, pp. A1, A4.",
+        "expected": "Torres, L. (2024, 20 de enero). El futuro de la educacion a distancia. El Diario Nacional, pp. A1, A4.",
+        "exact_match": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "wordapa7-content": {
+      "command": "python",
+      "args": ["C:/Users/--X/.gemini/antigravity/scratch/wordapa7/python/mcp_server.py"],
+      "env": {
+        "PYTHONPATH": "C:/Users/--X/.gemini/antigravity/scratch/wordapa7/python"
+      }
+    }
+  }
+}

@@ -1,0 +1,144 @@
+/* WordAPA7 — Estilos del Estudio de Estructura (Paso 2)
+ *
+ * Solo tokens: este archivo no declara ningún literal de color. Las familias y
+ * colores viven en `design-system.css`; acá se les da uso al diagrama.
+ * El color por nivel nace de los tokens secundarios (teal y navy/indigo) que
+ * se sumaron para salir del blanco y negro sin volver al amarillo.
+ */
+
+.mapa-estructura .mapa-caja {
+  fill: var(--color-bg-surface);
+  stroke: var(--color-border-subtle);
+  stroke-width: 1.5;
+  transition: stroke 160ms ease;
+}
+.mapa-estructura .lv1 .mapa-caja { stroke: var(--color-accent); }
+.mapa-estructura .lv2 .mapa-caja { stroke: var(--color-secondary); }
+.mapa-estructura .lv3 .mapa-caja { stroke: var(--color-level-3); }
+
+.mapa-estructura .mapa-etiqueta {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  fill: var(--color-text-primary);
+}
+.mapa-estructura .lv1 .mapa-etiqueta {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+}
+.mapa-estructura .mapa-meta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  fill: var(--color-text-tertiary);
+}
+
+.mapa-estructura .mapa-arista {
+  fill: none;
+  stroke: var(--color-border-strong);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 5;
+}
+.mapa-estructura .mapa-arista.e1 { stroke: var(--color-accent); }
+.mapa-estructura .mapa-arista.e2 { stroke: var(--color-secondary); }
+.mapa-estructura .mapa-arista.e3 { stroke: var(--color-level-3); }
+
+.mapa-estructura .mapa-anillo {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 2;
+}
+
+/* El arrastre: la caja de destino válida se enciende, la inválida se tacha en
+ * rojo, la línea de inserción marca dónde cae la rama y el fantasma sigue al
+ * cursor. Mientras se arrastra, todo lo demás se atenúa para que el destino se
+ * lea de un golpe. */
+.mapa-estructura .mapa-destino {
+  fill: none;
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+}
+.mapa-estructura .mapa-destino.valido { stroke: var(--color-accent); }
+.mapa-estructura .mapa-destino.invalido { stroke: var(--color-danger); }
+
+.mapa-estructura .mapa-insercion {
+  fill: var(--color-accent);
+  pointer-events: none;
+}
+
+.mapa-estructura .mapa-fantasma rect {
+  fill: var(--color-accent-soft);
+  stroke: var(--color-accent);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+  opacity: 0.7;
+}
+.mapa-estructura .mapa-fantasma text {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  fill: var(--color-text-primary);
+  opacity: 0.8;
+}
+
+/* `animation: none` libera la opacidad: la entrada del nodo deja el último
+ * keyframe aplicado y con él la atenuación del arrastre nunca se vería. */
+.mapa-estructura.arrastrando .mapa-nodo {
+  animation: none;
+  opacity: 0.5;
+  transition: opacity 160ms ease;
+}
+.mapa-estructura.arrastrando .mapa-nodo.origen { opacity: 0.3; }
+.mapa-estructura.arrastrando .mapa-nodo.destino { opacity: 1; }
+
+.mapa-estructura .mapa-nodo {
+  animation: mapa-nodo-in 320ms ease-out both;
+}
+.mapa-estructura .mapa-nodo:nth-child(2) { animation-delay: 40ms; }
+.mapa-estructura .mapa-nodo:nth-child(3) { animation-delay: 80ms; }
+.mapa-estructura .mapa-nodo:nth-child(4) { animation-delay: 120ms; }
+.mapa-estructura .mapa-nodo:nth-child(5) { animation-delay: 160ms; }
+.mapa-estructura .mapa-nodo:nth-child(6) { animation-delay: 200ms; }
+.mapa-estructura .mapa-nodo:nth-child(7) { animation-delay: 240ms; }
+.mapa-estructura .mapa-nodo:nth-child(8) { animation-delay: 280ms; }
+
+.mapa-estructura .mapa-arista {
+  animation: mapa-flujo 1.4s linear infinite;
+}
+.mapa-estructura .mapa-anillo {
+  animation: mapa-pulso 1.8s ease-in-out infinite;
+}
+
+.leyenda {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  display: inline-block;
+}
+.leyenda.lv1 { background: var(--color-accent); }
+.leyenda.lv2 { background: var(--color-secondary); }
+.leyenda.lv3 { background: var(--color-level-3); }
+
+@keyframes mapa-nodo-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes mapa-flujo {
+  to { stroke-dashoffset: -20; }
+}
+@keyframes mapa-pulso {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mapa-estructura .mapa-nodo,
+  .mapa-estructura .mapa-arista,
+  .mapa-estructura .mapa-anillo {
+    animation: none;
+  }
+  .mapa-estructura.arrastrando .mapa-nodo {
+    transition: none;
+  }
+}

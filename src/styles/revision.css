@@ -1,0 +1,73 @@
+/* WordAPA7 — Fase Revisión (paso 5): foco visible y estados de control.
+ *
+ * El reset global de `design-system.css` apaga el anillo de foco
+ * (`:focus-visible { outline: none }`) y solo lo restituye en las figuras.
+ * Aquí se restituye con tokens, acotado a la fase, sin tocar el resto de la app.
+ * Los componentes de la fase usan estilos inline, que no pueden expresar
+ * `:focus-visible` ni `:disabled`: esto cubre ese hueco. */
+
+.revision-phase :focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.revision-phase button:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.revision-phase button:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+/* Entrada de pantalla (puerta → workbench → sala IA) y de cada hallazgo.
+ * General → específico: la superficie aparece y, dentro, el hallazgo enfocado
+ * vuelve a entrar cada vez que cambia. Una sola curva, sin rebotes. */
+@keyframes rev-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rev-screen {
+  animation: rev-enter 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.rev-item {
+  animation: rev-enter 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .revision-phase button:not(:disabled):active {
+    transform: none;
+  }
+
+  .rev-screen,
+  .rev-item {
+    animation: none;
+  }
+}
+
+/* Reglas Responsive para Móviles y Pantallas Angostas (≤768px) */
+@media (max-width: 768px) {
+  .revision-phase {
+    overflow-y: auto !important;
+    padding: 8px !important;
+  }
+
+  .rev-screen {
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  .revision-phase [style*="gridTemplateColumns"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+

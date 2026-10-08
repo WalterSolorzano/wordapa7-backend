@@ -1677,11 +1677,12 @@ async def generate_pdf_endpoint(req: GenerateRequest) -> dict:
     if not doc:
         raise HTTPException(status_code=404, detail="Sesión no encontrada.")
 
-    # FASE 5 — Guard D-a: sin Word, error claro (sin fallback LO/heurístico)
+    # Verificación de motor para PDF (COM en Windows o LibreOffice en Linux/Cloud)
     from services.doc_converter import get_doc_converter
     try:
-        if get_doc_converter().get_active_engine() != "COM":
-            raise HTTPException(status_code=503, detail="Se requiere Microsoft Word")
+        active_engine = get_doc_converter().get_active_engine()
+        if active_engine not in ("COM", "LO"):
+            raise HTTPException(status_code=503, detail="Se requiere Microsoft Word o LibreOffice para generar PDF")
     except RuntimeError as e:
         raise HTTPException(status_code=503, detail=str(e))
 
@@ -2048,13 +2049,13 @@ async def generate_docx(req: GenerateRequest) -> dict:
             detail="El documento no tiene elementos para generar. Sube un documento primero."
         )
 
-    # FASE 5 — Guard D-a: sin Word, error claro (sin fallback LO/heurístico)
+    # Verificación de motor de generación (COM en Windows o LO/DOCX_ONLY en Cloud/Web)
     from services.doc_converter import get_doc_converter
     try:
-        if get_doc_converter().get_active_engine() != "COM":
-            raise HTTPException(status_code=503, detail="Se requiere Microsoft Word")
+        active_engine = get_doc_converter().get_active_engine()
     except RuntimeError as e:
-        raise HTTPException(status_code=503, detail=str(e))
+        # Si no hay conversor binario instalado, se permite la generación nativa python-docx
+        active_engine = "DOCX_ONLY"
 
     rules: APARuleSet = _session_rules(doc, req.rules)
     out_dir: Path = STORAGE_DIR / "sessions" / req.session_id

@@ -1,0 +1,13 @@
+name = "wordapa7-telemetry"
+main = "worker.js"
+compatibility_date = "2025-08-06"
+
+[[kv_namespaces]]
+binding = "TELEMETRY_KV"
+id = "TELEMETRY_KV_PLACEHOLDER"
+
+[vars]
+GITHUB_REPO = "user/wordapa7"
+
+[env.production]
+vars = { ENVIRONMENT = "production" }
