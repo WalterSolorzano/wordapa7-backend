@@ -24,5 +24,5 @@ COPY python/ ./python/
 
 EXPOSE 8742
 
-# Arrancar FastAPI
-CMD ["uvicorn", "python.main:app", "--host", "0.0.0.0", "--port", "8742"]
+# Arrancar FastAPI respetando la variable PORT que asigna Render dinámicamente
+CMD ["sh", "-c", "uvicorn python.main:app --host 0.0.0.0 --port ${PORT:-8742}"]
