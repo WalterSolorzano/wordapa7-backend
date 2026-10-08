@@ -1,0 +1,20 @@
+{
+  "_template": true,
+  "_instrucciones": "Copiá este archivo como 'NOMBRE_DE_TU_DOC.expected.json' y reemplazá los valores con los REALES de tu documento. Contalos a mano, o usá el COMReader para obtenerlos automáticamente.",
+  "file_name": "EJEMPLO.docx",
+  "expected": {
+    "cover_element_count": 15,
+    "heading_count": 22,
+    "heading_levels": { "1": 5, "2": 12, "3": 5 },
+    "paragraph_count": 120,
+    "table_count": 4,
+    "image_count": 8,
+    "reference_count": 12,
+    "has_body_start_idx": true,
+    "has_portada_fields": true
+  },
+  "tolerances": {
+    "heading_count": 2,
+    "paragraph_count": 5
+  }
+}

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: wordapa7-api
+    env: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: 8742
+      - key: WORDAPA7_ALLOWED_ORIGINS
+        value: "*"

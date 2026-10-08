@@ -1,0 +1,7 @@
+{
+  "name": "tabla_apa_generica",
+  "type": "table",
+  "description": "Bordes horizontales APA 7, etiquetas Tabla/Figura estandar.",
+  "definition": { "border_style": "apa", "table_label_prefix": "Tabla", "figure_label_prefix": "Figura" },
+  "version": 1
+}
